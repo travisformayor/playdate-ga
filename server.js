@@ -18,6 +18,7 @@ app.use(express.static(__dirname + '/public'));
 const pets = [
   {
     _id: 'j4k41o10an',
+    loginId: 1,
     name: 'Lucky',
     type: 'cat',
     age: 4,
@@ -27,6 +28,7 @@ const pets = [
   },
   {
     _id: 'ih9a0dz',
+    loginId: 2,
     name: 'Oreo',
     type: 'cat',
     age: 5,
@@ -36,6 +38,7 @@ const pets = [
   },
   {
     _id: '0jdnbl1jaz',
+    loginId: 3,
     name: 'Badger',
     type: 'dog',
     age: 3,
@@ -45,6 +48,7 @@ const pets = [
   },
   {
     _id: '1km1vca9x0f',
+    loginId: 4,
     name: 'Moxie',
     type: 'dog',
     age: 4,
@@ -92,6 +96,23 @@ app.get('/', (req, res) => {
 
 
 // chat route
+
+// ------ API ROUTES ------
+// GET index pets
+app.get('/api/pets', (req, res) => {
+  res.json(pets);
+});
+
+// GET index matches
+app.get('/api/matches', (req, res) => {
+  res.json(matches);
+});
+
+// GET index chats
+app.get('/api/chats', (req, res) => {
+  res.json(chats);
+});
+
 
 
 // start server
