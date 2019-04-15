@@ -1,0 +1,10 @@
+* {
+  font-size: 15px;
+  /* border: 1px solid red; */
+}
+body {
+  margin-top: 6em;
+}
+.nav-link, .navbar-brand {
+  font-size: 2em;
+}
