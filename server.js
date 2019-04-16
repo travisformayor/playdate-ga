@@ -91,17 +91,17 @@ const chats = [
 // ------ ROUTES ------
 // root route
 app.get('/', (req, res) => {
-  res.sendFile('views/index.html', {root: __dirname});
+  res.sendFile('/views/index.html', {root: __dirname});
 });
 
 // profile route
 app.get('/profile/:loginid', (req, res) => {
-  res.sendFile('views/profile.html', {root: __dirname});
+  res.sendFile('/views/profile.html', {root: __dirname});
 });
 
 // chat route
 app.get('/chat/:loginid', (req, res) => {
-  res.sendFile('views/chat.html', {root: __dirname});
+  res.sendFile('/views/chat.html', {root: __dirname});
 });
 
 // ------ API ROUTES ------

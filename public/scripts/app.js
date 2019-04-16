@@ -1,7 +1,35 @@
 console.log('sanity check');
+const url = window.location.href;
+const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
 
 $('.card').on('click', '.fas.fa-edit', editItem);
 $('.card').on('submit', '.editor', saveItem);
+
+getProfile(id);
+
+// get profile for the pet
+function getProfile(id) {
+  // make ajax call
+  let api = '/api/pets/' + id;
+  $.ajax({
+    method: 'GET',
+    url: api,
+    success: handleSuccess,
+    error: handleError
+  })
+  // populate a pet object from ajax call
+  function handleSuccess(res) {
+    let pet = res;
+    console.log(pet.age);
+  };
+  // handle a failure
+  function handleError(err) {
+    let error = `Error retrieving pet information. Please try again.`;
+    console.log(error);
+  };
+  // fill in all the fields with object
+
+}
 
 function editItem() {
   // console.log(this);
@@ -34,7 +62,7 @@ function editItem() {
   } else if ($(this).hasClass('edit-stat')) {
     const statProperty = $(this).siblings('.prop').text().trim();
     const statText = $(this).siblings('.stat').text().trim();
-    
+
     const clickedItem = $(this).parent();
     clickedItem.html(`
       <form class="editor stat">
