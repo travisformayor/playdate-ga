@@ -66,6 +66,7 @@ nav .profile-icon {
 }
 .profile span.bold {
   font-size: 1.15em;
+  align-self: center;
   font-weight: bolder;
   
 }
@@ -73,21 +74,23 @@ nav .profile-icon {
   font-size: 1.15em;
 }
 
-/* Profile Page Editing */
-.fa-edit#edit-title {
+/* Editing Profile Page
+-------------------------------------------------- */
+.fa-edit.edit-title {
   font-size: .75em;
   margin-left: .25em;
 }
-.fa-edit#edit-bio {
+.fa-edit.edit-bio, .fa-edit.edit-stat {
   font-size: 1em;
   margin-left: .25em;
 }
 .editor {
   display: flex;
-  flex-direction: column;
+  
   font-size: 1em;
 }
 .editor.title {
+  flex-direction: column;
   max-width: 200px;
   margin: 0 auto;
 }
@@ -100,6 +103,9 @@ nav .profile-icon {
   font-size: .75em;
   align-self: center;
 }
+.editor.bio {
+  flex-direction: column;
+}
 .editor.bio textarea {
   width: 90%;
   margin: 0 auto;
@@ -110,7 +116,15 @@ nav .profile-icon {
   align-self: center;
   margin-top: 5px;
 }
-
+.editor.stat {
+  flex-direction: row;
+  justify-content: center;
+}
+.editor.stat input {
+  width: 40vw;
+  max-width: 250px;
+  margin: 0 7px;
+}
 
 /* Sticky Footer
 -------------------------------------------------- */

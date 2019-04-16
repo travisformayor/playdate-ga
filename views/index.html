@@ -21,7 +21,8 @@
   <!-- CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
   <title>Project 1</title>
 </head>
@@ -62,57 +63,40 @@
 
   <h1>Profile</h1>
 
-  <div class="profile card text-center" >
+  <div class="profile card text-center">
     <img src="./images/oreo.jpg" class="card-img-top" alt="...">
     <div class="card-body">
       <h2 class="card-title">
         <span class="bold" id="name">Oreo</span>
         <span> the </span>
         <span class="bold" id="type">Cat</span>
-        <i class="fas fa-edit" id="edit-title"></i>
+        <i class="fas fa-edit edit-title"></i>
       </h2>
 
-      <!-- <form class="editor title">
-        <input type="text" id="name" value="${nameText}">
-        <input type="text" id="type" value="${typeText}">
-        <button type="submit" class="btn btn-primary">Save</button>
-      </form> -->
-
-      <!-- <form  class="editor bio">
-        <textarea id="biotext" rows="4"></textarea>
-        <button type="submit" class="btn btn-primary">Save</button>
-      </form> -->
-
       <p class="card-text" id="bio">
-        Some quick example text to build on the card title and make up the bulk of the card's content.
-      <i class="fas fa-edit" id="edit-bio"></i>
+        Twitch tail sit on human sun bathe, or kitty ipsum dolor sit, shed everywhere shed everywhere stretching attack
+        your ankles chase the red dot
+        <i class="fas fa-edit edit-bio"></i>
       </p>
     </div>
 
-    <ul id="taskList">
-      <li>
-        <input type="checkbox">
-        <span class="item">First Item</span>
-        <i class="fas fa-edit edit"></i>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item stats">
+        <span class="bold prop">Age</span>
+        <span class="stat">4 years</span>
+        <i class="fas fa-edit edit-stat"></i>
       </li>
     </ul>
 
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item stats">
-        <span class="bold">Age</span>
-        <span class="stat">4 years</span>
-      </li>
-    </ul>
     <div class="card-footer text-center">
-      <a href="#" class="card-link">Edit Profile</a>
     </div>
   </div>
- 
+
   <footer class="footer">
-      <div class="container">
-        <span class="text-muted">Place sticky footer content here.</span>
-      </div>
-    </footer>
+    <div class="container">
+      <span class="text-muted">&copy; PlayDate LLC</span>
+    </div>
+  </footer>
 </body>
 
 </html>
