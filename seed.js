@@ -1,7 +1,7 @@
 const db = require('./models');
 
-// Declare seed data.
-const petSeed = [
+// Declare seed data
+const seedPets = [
   {loginId: 1, name: 'Badger', img: 'badger.jpg', age: '6 years', type: 'Dog', bio: 'Woof. Placeholder Bio.', likes: []},
   {loginId: 2, name: 'Bailey', img: 'bailey.jpg', age: '11 years', type: 'Dog', bio: 'Woof. Placeholder Bio.', likes: []},
   {loginId: 3, name: 'Bedelia', img: 'bedelia.jpg', age: '7 months', type: 'Bearded Dragon', bio: 'Placeholder Bio.', likes: []},
@@ -24,7 +24,6 @@ const petSeed = [
 ];
 
 // DELETE all existing data from collections in order of dependency
-
 // DELETE all Matches
 db.Match.deleteMany({}, (err, deletedMatches) => {
   if (err) {
@@ -53,6 +52,49 @@ db.Match.deleteMany({}, (err, deletedMatches) => {
   });
 });
 
+// CREATE all seed data in collections
+function seedCollections() {
+  // CREATE all Pets
+  db.Pet.create(seedPets, (err, createdPets) => {
+    if (err) {
+      console.log(`Error creating pets: ${err}`);
+      return;
+    }
+    console.log(`Created ${createdPets.length} pets: ${createdPets}`);
+    // CREATE all Chats
+    db.Chat.create(seedChats, (err, createdChats) => {
+      if (err) {
+        console.log(`Error creating chats: ${err}`);
+        return;
+      }
+      console.log(`Created ${createdChats.length} chats: ${createdChats}`);
+      // CREATE all Matches
+      db.Match.create(seedMatches, (err, createdMatches) => {
+        if (err) {
+          console.log(`Error creating matches: ${err}`);
+          return;
+        }
+        console.log(`Created ${createdMatches.length} matches: ${createdMatches}`);
+
+        // All seed data added. Connect the data and create associations.
+        seedConnect();
+      });
+    })
+  })
+};
+
+function seedConnect() {
+  // Take the saved quiche just made, and push in the saved cheese we just made.
+  savedQuiche.ingredients.push(savedCheese);    
+  // This saves the id, not the info. associated! .populate pulls the data in.
+  savedQuiche.save( (err, savedCheesyQuiche) => {
+    if (err) {
+      return console.log(err);
+    } else {
+      console.log('cheesyQuiche food is ', savedCheesyQuiche);
+    }
+  });
+};
 
 
 // // DELETE all Pets
