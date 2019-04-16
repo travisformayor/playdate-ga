@@ -1,12 +1,7 @@
 * {
   font-size: 15px;
   /* border: 1px solid red; */
-  
-  margin: 0px;
 }
-/* .col {
-  padding: 0px;
-} */
 body {
   margin-top: 6em;
 }
@@ -72,7 +67,6 @@ nav .profile-icon {
 .profile .card-footer a {
   font-size: 1.15em;
 }
-
 
 /* Sticky Footer
 -------------------------------------------------- */
