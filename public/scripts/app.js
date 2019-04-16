@@ -1,4 +1,5 @@
 console.log('sanity check');
+// get the profile loginID from the URL
 const url = window.location.href;
 const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
 
@@ -16,7 +17,7 @@ function getProfile(id) {
     url: api,
     success: handleSuccess,
     error: handleError
-  })
+  });
   // populate a pet object from ajax call
   function handleSuccess(res) {
     let pet = res;
@@ -27,8 +28,6 @@ function getProfile(id) {
     let error = `Error retrieving pet information. Please try again.`;
     console.log(error);
   };
-  // fill in all the fields with object
-
 }
 
 function editItem() {

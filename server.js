@@ -24,7 +24,7 @@ const pets = [
     type: 'cat',
     age: 4,
     bio: `This is test data I don't know what you want from me`,
-    img: './public/images/lucky.jpg',
+    img: 'lucky.jpg',
     likes: ['ih9a0dz', '1km1vca9x0f'] // should create match with ih9a0dz
   },
   {
@@ -34,7 +34,7 @@ const pets = [
     type: 'cat',
     age: 5,
     bio: `It was the 'blurst' of times?! You stupid monkey!`,
-    img: './public/images/oreo.jpg',
+    img: 'oreo.jpg',
     likes: ['j4k41o10an'] // should create a match
   },
   {
@@ -44,7 +44,7 @@ const pets = [
     type: 'dog',
     age: 3,
     bio: `I'm a doggo!`,
-    img: './public/images/oreo.jpg',
+    img: 'badger.jpg',
     likes: [] // for testing when a pet has no liked pets
   },
   {
@@ -54,7 +54,7 @@ const pets = [
     type: 'dog',
     age: 4,
     bio: `Here's lookin' at you, kid.`,
-    img: './public/images/moxie.jpg',
+    img: 'moxie.jpg',
     likes: ['ih9a0dz'] // should not result in any matches
   }
 ];
