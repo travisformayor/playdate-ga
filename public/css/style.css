@@ -17,6 +17,22 @@ h1 {
   text-align: center;
 }
 
+/* Fixed Header Nav
+-------------------------------------------------- */
+/* Fixed nav css is all bootstrap. 
+   The following is for the profile icon */
+nav .profile-icon {
+  width: 55px;
+  height: 55px;
+  background-color: white;
+  border-radius: 50% / 50%;
+  border: 3px solid white;
+  background-image: url("../images/thumb/oreo.jpg");
+  background-attachment: center;
+  background-size: 110%;
+  background-repeat: no-repeat;
+}
+
 /* Profile Page
 -------------------------------------------------- */
 .profile.card {
@@ -58,11 +74,7 @@ h1 {
 }
 
 
-
-
-
-
-/* Sticky footer style
+/* Sticky Footer
 -------------------------------------------------- */
 html {
   position: relative;
