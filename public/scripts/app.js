@@ -3,9 +3,6 @@ console.log('sanity check');
 const url = window.location.href;
 const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
 
-$('.card').on('click', '.fas.fa-edit', editItem);
-$('.card').on('submit', '.editor', saveItem);
-
 getProfile(id);
 
 // get profile for the pet
@@ -20,33 +17,46 @@ function getProfile(id) {
   });
   // populate a pet object from ajax call
   function handleSuccess(res) {
-    let pet = res;
-    let petHTML = `
-    <h1>Profile</h1>
-    <div class="profile card text-center">
-      <img src="/images/${pet.img}" class="card-img-top" alt="..." id="pet-image">
-      <div class="card-body">
-        <h2 class="card-title">
-          <span class="bold" id="name">${pet.name}</span>
-          <span> the </span>
-          <span class="bold" id="type">${pet.type}</span>
-          <i class="fas fa-edit edit-title"></i>
-        </h2>
+    // check to see if the response object actually has an entry (in this case name, but anything can be used)
+    // if not, return error
+    // without this, it will be read as a success and will populate the HTML with undefineds
+    if (res.name) {
+      let pet = res;
+      // generate HTML for page and then append to main
+      let petHTML = `
+      <h1>Profile</h1>
+      <div class="profile card text-center">
+        <img src="/images/${pet.img}" class="card-img-top" alt="..." id="pet-image">
+        <div class="card-body">
+          <h2 class="card-title">
+            <span class="bold" id="name">${pet.name}</span>
+            <span> the </span>
+            <span class="bold" id="type">${pet.type}</span>
+            <i class="fas fa-edit edit-title"></i>
+          </h2>
 
-        <p class="card-text" id="bio">${pet.bio}
-          <i class="fas fa-edit edit-bio"></i>
-        </p>
-      </div>
+          <p class="card-text" id="bio">${pet.bio}
+            <i class="fas fa-edit edit-bio"></i>
+          </p>
+        </div>
 
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item stats">
-          <span class="bold prop">Age</span>
-          <span class="stat">${pet.age} years</span>
-          <i class="fas fa-edit edit-stat"></i>
-        </li>
-      </ul>
-    `;
-    $('main').append(petHTML);
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item stats">
+            <span class="bold prop">Age</span>
+            <span class="stat">${pet.age} years</span>
+            <i class="fas fa-edit edit-stat"></i>
+          </li>
+        </ul>
+      `;
+      $('main').append(petHTML);
+      // add event listeners for editing
+      $('.card').on('click', '.fas.fa-edit', editItem);
+      $('.card').on('submit', '.editor', saveItem);
+      // add thumb icon to nav
+      $('nav .profile-icon').css('background-image', `url(/images/thumb/${pet.img})`);
+    } else {
+      handleError(res);
+    }
   };
   // handle a failure
   function handleError(err) {

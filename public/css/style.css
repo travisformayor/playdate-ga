@@ -17,7 +17,7 @@ span {
 
 /* Fixed Header Nav
 -------------------------------------------------- */
-/* Fixed nav css is all bootstrap. 
+/* Fixed nav css is all bootstrap.
    The following is for the profile icon */
 nav .profile-icon {
   width: 55px;
@@ -25,7 +25,7 @@ nav .profile-icon {
   background-color: white;
   border-radius: 50% / 50%;
   border: 3px solid white;
-  background-image: url("../images/thumb/oreo.jpg");
+  /* background-image: url("../images/thumb/oreo.jpg"); */
   background-attachment: center;
   background-size: 110%;
   background-repeat: no-repeat;
@@ -68,7 +68,7 @@ nav .profile-icon {
   font-size: 1.15em;
   align-self: center;
   font-weight: bolder;
-  
+
 }
 .profile .card-footer a {
   font-size: 1.15em;
@@ -86,7 +86,7 @@ nav .profile-icon {
 }
 .editor {
   display: flex;
-  
+
   font-size: 1em;
 }
 .editor.title {
