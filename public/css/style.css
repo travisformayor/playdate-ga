@@ -11,6 +11,9 @@ body {
 h1 {
   text-align: center;
 }
+span {
+  font-size: 1em;
+}
 
 /* Fixed Header Nav
 -------------------------------------------------- */
@@ -49,12 +52,12 @@ nav .profile-icon {
 .profile h2.card-title {
   font-size: 2em;
   text-align: center;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
-.profile h2.card-title span {
-  font-size: 1em;
+/* .profile h2.card-title span {
+
   font-weight: normal;
-}
+} */
 .profile .card-text {
   font-size: 1.25em;
 }
@@ -62,14 +65,41 @@ nav .profile-icon {
   font-size: 1.25em;
   line-height: 1em;
 }
-.profile .stats span {
+.profile .stat {
+  margin-left: .5em;
+
+}
+.profile span.bold {
   font-size: 1.15em;
   font-weight: bolder;
-  margin-right: .5em;
+  
 }
 .profile .card-footer a {
   font-size: 1.15em;
 }
+
+/* Profile Page Editing */
+.fa-edit {
+  font-size: .75em;
+  margin-left: .25em;
+}
+.editor.title {
+  display: flex;
+  flex-direction: column;
+  max-width: 200px;
+  margin: 0 auto;
+  font-size: 1em;
+}
+.editor.title input {
+  margin: 5px 0;
+  text-align: center;
+}
+.editor.title button {
+  width: 80%;
+  font-size: .75em;
+  align-self: center;
+}
+
 
 /* Sticky Footer
 -------------------------------------------------- */

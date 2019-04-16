@@ -21,6 +21,7 @@
   <!-- CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
   <title>Project 1</title>
 </head>
@@ -65,14 +66,34 @@
     <img src="./images/oreo.jpg" class="card-img-top" alt="...">
     <div class="card-body">
       <h2 class="card-title">
-        Oreo <span>the</span> Cat
+        <span class="bold" id="name">Oreo</span>
+        <span> the </span>
+        <span class="bold" id="type">Cat</span>
+        <i class="fas fa-edit" id="edit-title"></i>
       </h2>
+
+      <!-- <form class="editor title">
+        <input type="text" value="' + itemText + '">
+        <input type="text" value="' + itemText + '">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form> -->
+
       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
         content.</p>
     </div>
+
+    <ul id="taskList">
+      <li>
+        <input type="checkbox">
+        <span class="item">First Item</span>
+        <i class="fas fa-edit edit"></i>
+      </li>
+    </ul>
+
     <ul class="list-group list-group-flush">
       <li class="list-group-item stats">
-        <span>Age</span>4 years
+        <span class="bold">Age</span>
+        <span class="stat">4 years</span>
       </li>
     </ul>
     <div class="card-footer text-center">
