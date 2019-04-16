@@ -121,22 +121,17 @@ app.get('/api/pets', (req, res) => {
 
 // GET show pet - gets one pet based on loginId
 app.get('/api/pets/:id', (req, res) => {
-  db.Pet.findById(req.params.id)
-    .exec((err, foundPet) => {
-      if (err) return res.json({error: err});
-      res.json(foundPet);
-  })
-  // let id = parseInt(req.params.id);
-  // let matchedPet;
-  // // loops through pets array and finds if its loginId is equal to passed id
-  // pets.forEach((pet) => {
-  //   pet.loginId === id ? matchedPet = pet : null;
-  // });
-  // if (matchedPet) {
-  //   res.json(matchedPet);
-  // } else {
-  //   res.send(`Cannot find pet with ID ${id}.`);
-  // }
+  const login = req.params.id;
+  if (isNum(login)) {
+    db.Pet.findOne({loginId: login})
+      .exec((err, foundPet) => {
+        if (err) return res.json({error: err});
+        res.json(foundPet);
+    })
+  } else {
+    res.status(404).send('Please enter a numeric Pet ID');
+
+  }
 });
 
 // GET index matches
