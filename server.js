@@ -99,7 +99,7 @@ app.get('/profile/:loginid', (req, res) => {
   res.sendFile('/views/profile.html', {root: __dirname});
 });
 
-// sniff route
+// sniff route logged in
 app.get('/sniff/:loginid', (req, res) => {
   res.sendFile('/views/sniff.html', {root: __dirname});
 })
@@ -112,22 +112,31 @@ app.get('/chat/:loginid', (req, res) => {
 // ------ API ROUTES ------
 // GET index pets
 app.get('/api/pets', (req, res) => {
-  res.json(pets);
+  db.Pet.find()
+    .exec((err, allPets) => {
+      if (err) return res.json({error: err});
+      res.json(allPets);
+    })
 });
 
 // GET show pet - gets one pet based on loginId
 app.get('/api/pets/:id', (req, res) => {
-  let id = parseInt(req.params.id);
-  let matchedPet;
-  // loops through pets array and finds if its loginId is equal to passed id
-  pets.forEach((pet) => {
-    pet.loginId === id ? matchedPet = pet : null;
-  });
-  if (matchedPet) {
-    res.json(matchedPet);
-  } else {
-    res.send(`Cannot find pet with ID ${id}.`);
-  }
+  db.Pet.findById(req.params.id)
+    .exec((err, foundPet) => {
+      if (err) return res.json({error: err});
+      res.json(foundPet);
+  })
+  // let id = parseInt(req.params.id);
+  // let matchedPet;
+  // // loops through pets array and finds if its loginId is equal to passed id
+  // pets.forEach((pet) => {
+  //   pet.loginId === id ? matchedPet = pet : null;
+  // });
+  // if (matchedPet) {
+  //   res.json(matchedPet);
+  // } else {
+  //   res.send(`Cannot find pet with ID ${id}.`);
+  // }
 });
 
 // GET index matches
@@ -170,18 +179,22 @@ app.get('/api/chats/:id', (req, res) => {
   }
 });
 
-// root route with loginid, redirect to /sniff
+// root route with loginid, redirect to /profile
 // adding as last as it's a greedy match
 app.get('/:loginid', (req, res) => {
   const login = req.params.loginid;
-  const regEx = RegExp('^\\d+$');
-  if (regEx.test(login)) {
-    res.redirect(302, `/sniff/${login}`);
+  if (isNum(login)) {
+    res.redirect(302, `/profile/${login}`);
   } else {
     res.sendStatus(404);
   }
 })
 
+// is input string numeric
+function isNum(str) {
+  const regEx = RegExp('^\\d+$');
+  return regEx.test(str);
+}
 
 // start server
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
