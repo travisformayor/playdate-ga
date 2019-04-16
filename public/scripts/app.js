@@ -21,12 +21,37 @@ function getProfile(id) {
   // populate a pet object from ajax call
   function handleSuccess(res) {
     let pet = res;
-    console.log(pet.age);
+    let petHTML = `
+    <h1>Profile</h1>
+    <div class="profile card text-center">
+      <img src="/images/${pet.img}" class="card-img-top" alt="..." id="pet-image">
+      <div class="card-body">
+        <h2 class="card-title">
+          <span class="bold" id="name">${pet.name}</span>
+          <span> the </span>
+          <span class="bold" id="type">${pet.type}</span>
+          <i class="fas fa-edit edit-title"></i>
+        </h2>
+
+        <p class="card-text" id="bio">${pet.bio}
+          <i class="fas fa-edit edit-bio"></i>
+        </p>
+      </div>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item stats">
+          <span class="bold prop">Age</span>
+          <span class="stat">${pet.age} years</span>
+          <i class="fas fa-edit edit-stat"></i>
+        </li>
+      </ul>
+    `;
+    $('main').append(petHTML);
   };
   // handle a failure
   function handleError(err) {
-    let error = `Error retrieving pet information. Please try again.`;
-    console.log(error);
+    let error = `<h1>Error retrieving pet information. Please try again.</h1>`;
+    $('main').append(error);
   };
 }
 
