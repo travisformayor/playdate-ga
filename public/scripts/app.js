@@ -7,8 +7,8 @@ function editItem() {
   console.log(this);
   if (this.id === "edit-title") {
     // console.log(this.id);
-    const nameText = $(this).siblings('#name').text();
-    const typeText = $(this).siblings('#type').text();
+    const nameText = $(this).siblings('#name').text().trim();
+    const typeText = $(this).siblings('#type').text().trim();
 
     const clickedItem = $(this).parent();
     clickedItem.html(`
@@ -20,6 +20,19 @@ function editItem() {
       `);
     clickedItem.find('input:first-child').focus();
   } else if (this.id === "edit-bio") {
+    // console.log(this.id);
+    const bioText = $(this).parent('#bio').text().trim();
+
+    const clickedItem = $(this).parent();
+    clickedItem.html(`
+      <form  class="editor bio">
+        <textarea id="biotext" rows="4"></textarea>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+      `);
+    $('#biotext').val(bioText);
+    // debugger;
+    clickedItem.find('textarea:first-child').focus();
 
   } else if (this.id === "edit-stat") {
 
@@ -28,10 +41,11 @@ function editItem() {
 
 function saveItem(e) {
   e.preventDefault();
+  // debugger;
   if ($(this).hasClass('title')) {
     // console.log(this);
-    const nameText = $(this).children('#name').val();
-    const typeText = $(this).children('#type').val();
+    const nameText = $(this).children('#name').val().trim();
+    const typeText = $(this).children('#type').val().trim();
 
     const submitItem = $(this).parent();
     submitItem.html(`
@@ -40,14 +54,15 @@ function saveItem(e) {
       <span class="bold" id="type">${typeText}</span>
       <i class="fas fa-edit" id="edit-title"></i>
       `);
-  }
+  } else if ($(this).hasClass('bio')) {
+    // console.log(this);
+    const bioText = $(this).children('#biotext').val().trim();
 
-	// // Select the to-do list item the user wants to save
-	// const listItem = $(this).parent();
-	// // Get the value of the input inside of this item
-	// const itemText = listItem.find('input').val();
-	// // Replace the input in the list item with the value of the input field
-	// const newListItem = '<input type="checkbox"><span class="item">' + itemText + '</span><a href="#" class="edit">Edit</a><a href="#" class="remove">Remove</a>';
-	// // Append the list item to our ordered to-do list
-	// listItem.html(newListItem);	
+    const submitItem = $(this).parent();
+    submitItem.html(`
+      ${bioText}
+      <i class="fas fa-edit" id="edit-bio"></i>
+      `);
+  }
+	
 }

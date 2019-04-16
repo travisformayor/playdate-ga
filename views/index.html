@@ -73,18 +73,20 @@
       </h2>
 
       <!-- <form class="editor title">
-        <input type="text" value="' + itemText + '">
-        <input type="text" value="' + itemText + '">
+        <input type="text" id="name" value="${nameText}">
+        <input type="text" id="type" value="${typeText}">
         <button type="submit" class="btn btn-primary">Save</button>
       </form> -->
 
-      <form  class="editor bio">
+      <!-- <form  class="editor bio">
         <textarea id="biotext" rows="4"></textarea>
-      </form>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form> -->
 
-
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-        content.</p>
+      <p class="card-text" id="bio">
+        Some quick example text to build on the card title and make up the bulk of the card's content.
+      <i class="fas fa-edit" id="edit-bio"></i>
+      </p>
     </div>
 
     <ul id="taskList">

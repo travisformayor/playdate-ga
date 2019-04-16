@@ -74,16 +74,22 @@ nav .profile-icon {
 }
 
 /* Profile Page Editing */
-.fa-edit {
+.fa-edit#edit-title {
   font-size: .75em;
   margin-left: .25em;
 }
-.editor.title {
+.fa-edit#edit-bio {
+  font-size: 1em;
+  margin-left: .25em;
+}
+.editor {
   display: flex;
   flex-direction: column;
+  font-size: 1em;
+}
+.editor.title {
   max-width: 200px;
   margin: 0 auto;
-  font-size: 1em;
 }
 .editor.title input {
   margin: 5px 0;
@@ -93,6 +99,16 @@ nav .profile-icon {
   width: 80%;
   font-size: .75em;
   align-self: center;
+}
+.editor.bio textarea {
+  width: 90%;
+  margin: 0 auto;
+}
+.editor.bio button {
+  width: 150px;
+  font-size: 1.25em;
+  align-self: center;
+  margin-top: 5px;
 }
 
 
