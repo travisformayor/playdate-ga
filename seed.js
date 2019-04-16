@@ -23,6 +23,19 @@ const seedPets = [
   {loginId: 19, name: 'Venus', img: 'venus.jpg', age: '4 months', type: 'Rosy Boa', bio: 'Placeholder Bio.', likes: []}
 ];
 
+const seedMatches = [
+  {match: '', chatId: ''},
+];
+
+const seedChats = [
+  {messages: [
+    { senderId: '', content: 'Hello there'}, { senderId: '', content: 'Oh, hi!'},
+  ]},
+  {messages: [
+    { senderId: '', content: 'Down to fetch?'}, { senderId: '', content: "No, I'm a cat"},
+  ]},
+]
+
 // DELETE all existing data from collections in order of dependency
 // DELETE all Matches
 db.Match.deleteMany({}, (err, deletedMatches) => {
@@ -68,51 +81,30 @@ function seedCollections() {
         return;
       }
       console.log(`Created ${createdChats.length} chats: ${createdChats}`);
-      // CREATE all Matches
-      db.Match.create(seedMatches, (err, createdMatches) => {
-        if (err) {
-          console.log(`Error creating matches: ${err}`);
-          return;
-        }
-        console.log(`Created ${createdMatches.length} matches: ${createdMatches}`);
+      // // CREATE all Matches
+      // db.Match.create(seedMatches, (err, createdMatches) => {
+      //   if (err) {
+      //     console.log(`Error creating matches: ${err}`);
+      //     return;
+      //   }
+      //   console.log(`Created ${createdMatches.length} matches: ${createdMatches}`);
 
-        // All seed data added. Connect the data and create associations.
-        seedConnect();
-      });
+      //   // All seed data added. Connect the data and create associations.
+      // 
+      // });
+      seedConnect(createdPets, createdChats);
     })
   })
 };
 
-function seedConnect() {
-  // Take the saved quiche just made, and push in the saved cheese we just made.
-  savedQuiche.ingredients.push(savedCheese);    
-  // This saves the id, not the info. associated! .populate pulls the data in.
-  savedQuiche.save( (err, savedCheesyQuiche) => {
+function seedConnect(dbPets, dbChats) {
+
+  dbPets[0].likes.push(dbPets[1]);
+  dbPets.save((err, savedPets) => {
     if (err) {
       return console.log(err);
     } else {
-      console.log('cheesyQuiche food is ', savedCheesyQuiche);
+      console.log(`Updated pets with likes: ${savedPets}`);
     }
   });
 };
-
-
-// // DELETE all Pets
-// db.Pet.deleteMany({}, (err, deletedPets) => {
-//   if (err) {
-//     console.log(`Error deleting pets: ${err}`);
-//     return;
-//   }
-//   console.log(`Removed all pets: ${JSON.stringify(deletedPets)}`);
-
-//   // CREATE all Pets
-//   db.Pet.create(seedPets, (err, createdPets) => {
-//     if (err) {
-//       console.log(`Error creating pets: ${err}`);
-//       return;
-//     }
-//     console.log(`recreated all pets: ${createdPets}`);
-//     console.log(`created ${createdPets.length} pets`);
-//     return process.exit(0);
-//   })
-// })
