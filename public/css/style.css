@@ -1,0 +1,151 @@
+* {
+  font-size: 15px;
+  /* border: 1px solid red; */
+}
+body {
+  margin-top: 6em;
+}
+.nav-link, .navbar-brand {
+  font-size: 2em;
+}
+h1 {
+  text-align: center;
+}
+span {
+  font-size: 1em;
+}
+
+/* Fixed Header Nav
+-------------------------------------------------- */
+/* Fixed nav css is all bootstrap. 
+   The following is for the profile icon */
+nav .profile-icon {
+  width: 55px;
+  height: 55px;
+  background-color: white;
+  border-radius: 50% / 50%;
+  border: 3px solid white;
+  background-image: url("../images/thumb/oreo.jpg");
+  background-attachment: center;
+  background-size: 110%;
+  background-repeat: no-repeat;
+}
+
+/* Profile Page
+-------------------------------------------------- */
+.profile.card {
+  width: 80vw;
+  max-width: 800px;
+  margin: auto;
+  border-radius: 15px;
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+.profile.card .card-img-top {
+  width: 100%;
+  height: 50vh;
+  object-fit: cover;
+}
+.profile .card-body {
+  min-height: 20vh;
+}
+.profile h2.card-title {
+  font-size: 2em;
+  text-align: center;
+}
+.profile .card-text {
+  font-size: 1.25em;
+}
+.profile .stats {
+  font-size: 1.25em;
+  line-height: 1em;
+}
+.profile .stat {
+  margin-left: .5em;
+
+}
+.profile span.bold {
+  font-size: 1.15em;
+  align-self: center;
+  font-weight: bolder;
+  
+}
+.profile .card-footer a {
+  font-size: 1.15em;
+}
+
+/* Editing Profile Page
+-------------------------------------------------- */
+.fa-edit.edit-title {
+  font-size: .75em;
+  margin-left: .25em;
+}
+.fa-edit.edit-bio, .fa-edit.edit-stat {
+  font-size: 1em;
+  margin-left: .25em;
+}
+.editor {
+  display: flex;
+  
+  font-size: 1em;
+}
+.editor.title {
+  flex-direction: column;
+  max-width: 200px;
+  margin: 0 auto;
+}
+.editor.title input {
+  margin: 5px 0;
+  text-align: center;
+}
+.editor.title button {
+  width: 80%;
+  font-size: .75em;
+  align-self: center;
+}
+.editor.bio {
+  flex-direction: column;
+}
+.editor.bio textarea {
+  width: 90%;
+  margin: 0 auto;
+}
+.editor.bio button {
+  width: 150px;
+  font-size: 1.25em;
+  align-self: center;
+  margin-top: 5px;
+}
+.editor.stat {
+  flex-direction: row;
+  justify-content: center;
+}
+.editor.stat input {
+  width: 40vw;
+  max-width: 250px;
+  margin: 0 7px;
+}
+
+/* Sticky Footer
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 100px; /* Margin + footer height = 40px */
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+.footer .container {
+  margin: auto;
+  text-align: center;
+  max-width: 680px;
+  padding: 0 15px;
+}
