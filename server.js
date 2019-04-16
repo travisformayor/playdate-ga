@@ -130,13 +130,51 @@ app.get('/api/pets/:id', (req, res) => {
     })
   } else {
     res.status(404).send('Please enter a numeric Pet ID');
-
   }
 });
 
+// POST create new pet
+app.post('/api/pets', (req, res) => {
+  db.Pet.create(req.body, (err, createdPet) => {
+      if (err) return res.json({error: err});
+      res.json(createdPet);
+  })
+})
+
+// PUT update pet
+app.put('/api/pets/:id', (req, res) => {
+  const login = req.params.id;
+  if (isNum(login)) {
+    db.Pet.updateOne({loginId: login}, req.body, (err, updatedPet) => {
+      if (err) return res.json({error: err});
+      res.json(updatedPet);
+    })
+  } else {
+    res.status(404).send('Please enter a numeric Pet ID');
+  }
+})
+
+// DELETE delete pet
+app.delete('/api/pets/:id', (req, res) => {
+  const login = req.params.id;
+  if (isNum(login)) {
+    db.Pet.deleteOne({loginId: login}, (err, deleteMsg) => {
+      if (err) return res.json({error: err});
+      res.json(deletedMsg);
+    })
+  } else {
+    res.status(404).send('Please enter a numeric Pet ID');
+  }
+})
+
 // GET index matches
 app.get('/api/matches', (req, res) => {
-  res.json(matches);
+//  res.json(matches);
+db.Match.find()
+  .exec((err, allPets) => {
+    if (err) return res.json({error: err});
+    res.json(allPets);
+  })
 });
 
 // GET show match
