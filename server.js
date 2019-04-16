@@ -89,19 +89,24 @@ const chats = [
 ];
 
 // ------ ROUTES ------
-// root route
+// root route; show the sniff page not logged in
 app.get('/', (req, res) => {
-  res.sendFile('views/index.html', {root: __dirname});
+  res.sendFile('/views/sniff.html', {root: __dirname});
 });
 
 // profile route
 app.get('/profile/:loginid', (req, res) => {
-  res.sendFile('views/profile.html', {root: __dirname});
+  res.sendFile('/views/profile.html', {root: __dirname});
 });
+
+// sniff route
+app.get('/sniff/:loginid', (req, res) => {
+  res.sendFile('/views/sniff.html', {root: __dirname});
+})
 
 // chat route
 app.get('/chat/:loginid', (req, res) => {
-  res.sendFile('views/chat.html', {root: __dirname});
+  res.sendFile('/views/chat.html', {root: __dirname});
 });
 
 // ------ API ROUTES ------
@@ -164,6 +169,19 @@ app.get('/api/chats/:id', (req, res) => {
     res.send(`Cannot find chat with ID ${id}.`);
   }
 });
+
+// root route with loginid, redirect to /sniff
+// adding as last as it's a greedy match
+app.get('/:loginid', (req, res) => {
+  const login = req.params.loginid;
+  const regEx = RegExp('^\\d+$');
+  if (regEx.test(login)) {
+    res.redirect(302, `/sniff/${login}`);
+  } else {
+    res.sendStatus(404);
+  }
+})
+
 
 // start server
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
