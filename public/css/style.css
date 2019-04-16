@@ -1,6 +1,6 @@
 * {
   font-size: 15px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   
   margin: 0px;
 }
@@ -31,8 +31,34 @@ h1 {
   width: 100%;
   height: 50vh;
   object-fit: cover;
- 
 }
+.profile h2.card-title {
+  font-size: 2em;
+  text-align: center;
+  font-weight: bold;
+}
+.profile h2.card-title span {
+  font-size: 1em;
+  font-weight: normal;
+}
+.profile .card-text {
+  font-size: 1.25em;
+}
+.profile .stats {
+  font-size: 1.25em;
+  line-height: 1em;
+}
+.profile .stats span {
+  font-size: 1.15em;
+  font-weight: bolder;
+  margin-right: .5em;
+}
+.profile .card-footer a {
+  font-size: 1.15em;
+}
+
+
+
 
 
 
