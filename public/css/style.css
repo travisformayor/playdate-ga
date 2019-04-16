@@ -43,6 +43,9 @@ nav .profile-icon {
   height: 50vh;
   object-fit: cover;
 }
+.profile .card-body {
+  min-height: 20vh;
+}
 .profile h2.card-title {
   font-size: 2em;
   text-align: center;
