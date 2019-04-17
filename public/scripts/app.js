@@ -131,6 +131,12 @@ function saveItem(e) {
     // console.log(this);
     const nameText = $(this).children('#name').val().trim();
     const typeText = $(this).children('#type').val().trim();
+    // create obj to pass to editProfile
+    let editObj = {
+      name: nameText,
+      type: typeText
+    };
+    editProfile(editObj);
 
     const submitItem = $(this).parent();
     submitItem.html(`
@@ -142,6 +148,11 @@ function saveItem(e) {
   } else if ($(this).hasClass('bio')) {
     // console.log(this);
     const bioText = $(this).children('#biotext').val().trim();
+    // create obj to pass to editProfile
+    let editObj = {
+      bio: bioText,
+    };
+    editProfile(editObj);
 
     const submitItem = $(this).parent();
     submitItem.html(`
@@ -160,4 +171,19 @@ function saveItem(e) {
       <i class="fas fa-edit edit-stat"></i>
       `);
   }
+}
+
+// update profile via PUT: /api/pets/:id
+function editProfile(data) {
+  $.ajax({
+    method: "PUT",
+    url: `/api/pets/${id}`,
+    data: data,
+    success: (res) => {
+      console.log('Success!');
+    },
+    error: (res) => {
+      console.log(res);
+    }
+  })
 }
