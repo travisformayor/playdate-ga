@@ -1,6 +1,8 @@
 // get the pet loginID from the URL
 const url = window.location.href;
 const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
+// create var to hold all the logged in pet's likes
+let petLikes;
 
 getProfile(id);
 getAllPets();
@@ -14,6 +16,8 @@ function getProfile(id) {
     url: api,
     success: (res) => {
       let pet = res;
+      // add the logged in pet's likes to the petLikes var from above
+      petLikes = pet.likes;
       // add profile photo to header
       $('nav .profile-icon').css('background-image', `url(/images/thumb/${pet.img})`);
       // add ID-specific links to header and add CSS to make cursor a pointer on links
@@ -39,7 +43,10 @@ function getAllPets() {
 
   function handleSuccess(res){
     // filter the logged in pet's own info out of the response array
-    let pets = res.filter(pet => pet.loginId !== id);
+    // then filter out any pets the logged in pet already likes
+    let pets = res.filter(pet => pet.loginId !== id)
+                .filter(pet => petLikes.indexOf(pet._id) === -1);
+
     pets.forEach((pet) => {
       // properly format pet age into year or year and months
       let petFormattedAge;
@@ -61,6 +68,7 @@ function getAllPets() {
                 <span class="bold" id="name">${pet.name}</span>
                 <span> the </span>
                 <span class="bold" id="type">${pet.type}</span>
+                <span class="pet-id" style="display: none;">${pet._id}</span>
               </h2>
               <p class="card-text" id="bio">${pet.bio}</p>
             </div>
@@ -77,10 +85,26 @@ function getAllPets() {
       // }
     });
    $('.carousel-item').first().addClass('active');
+
   };
 
   function handleError(res){
     let error = `<h1>Error retrieving pet information. Please try again.</h1>`;
     $('main').append(error);
   };
+}
+
+ // uses POST
+function likePet(petId, likedPetId) {
+  const api = '/api/likes';
+  $.ajax({
+    method: 'GET',
+    url: api,
+    success: handleSuccess,
+    error: handleError
+  });
+}
+
+function dislikePet(petId, likedPetId) {
+
 }
