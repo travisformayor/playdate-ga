@@ -54,6 +54,10 @@ function getProfile(id) {
       $('.card').on('submit', '.editor', saveItem);
       // add thumb icon to nav
       $('nav .profile-icon').css('background-image', `url(/images/thumb/${pet.img})`);
+      // add ID-specific links to header
+      $('#profile-link').attr('href', `/profile/${pet.loginId}`);
+      $('#sniff-link').attr('href', `/sniff/${pet.loginId}`);
+      $('#chat-link').attr('href', `/chat/${pet.loginId}`);
     } else {
       handleError(res);
     }
