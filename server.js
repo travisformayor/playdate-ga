@@ -13,7 +13,6 @@ app.use(bodyParser.json());
 // serve static assets
 app.use(express.static(__dirname + '/public'));
 
-
 // ------ ROUTES ------
 // root route; show the sniff page not logged in
 app.get('/', (req, res) => {
@@ -138,7 +137,6 @@ app.post('/api/matches', (req, res) => {
     })
   })
 })
-
 
 // root route with loginid, redirect to /profile
 // adding as last as it's a greedy match
