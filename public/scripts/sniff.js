@@ -1,4 +1,27 @@
+// get the pet loginID from the URL
+const url = window.location.href;
+const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
+
+getProfile(id);
 getAllPets();
+
+// get the logged in pet's loginID to populate profile thumbnail
+function getProfile(id) {
+  // make ajax call
+  let api = '/api/pets/' + id;
+  $.ajax({
+    method: 'GET',
+    url: api,
+    success: (res) => {
+      console.log('success');
+      $('nav .profile-icon').css('background-image', `url(/images/thumb/${res.img})`);
+      $('nav .nav-link').attr('href', `/profile/${res.loginId}`);
+    } ,
+    error: (res) => {
+      return ('Could not find pet ID.');
+    }
+  });
+}
 
 // generate array of all pets
 function getAllPets() {
