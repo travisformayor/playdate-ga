@@ -89,7 +89,7 @@ function seedCollections() {
     }
     console.log(`Created ${createdPets.length} pets: ${createdPets}`);
     seedLikes(createdPets);
-    seedMatches(createdPets);
+    createMatchAndChat(createdPets);
   })
 };
 
@@ -118,46 +118,68 @@ function seedLikes(dbPets) {
   });
 };
 
-function seedMatches(dbPets) {
-   // construct match inside the following array
-   let seedMatch = {};
-  
+function createMatchAndChat(dbPets) {
+  // construct match and chat log inside the following objects
+  let seedMatch = [];
+  let matchCounter = 0;
   // mutualLikes is a global var. See above.
   mutualLikes.forEach(match => {
     // Take mutualLikes and search for mongodb _ids'
-    const liker1 =  dbPets.find(pet => pet.loginId == match.match_loginID[0]);
-    const liker2 = dbPets.find(pet => pet.loginId == match.match_loginID[1]);
-    console.log(`Mutual: ${liker1.name} likes ${liker2.name}.`);
+    const likers = [];
+    likers[0] =  dbPets.find(pet => pet.loginId == match.match_loginID[0]);
+    likers[1] = dbPets.find(pet => pet.loginId == match.match_loginID[1]);
+    console.log(`Mutual: ${likers[0].name} likes ${likers[1].name}.`);
   
-    seedMatch.match = [];
-    seedMatch.match.push(liker1._id);
-    seedMatch.match.push(liker2._id);
+    seedMatch[matchCounter] = {match: [], chatId: {}};
+    seedMatch[matchCounter].match.push(likers[0]._id);
+    seedMatch[matchCounter].match.push(likers[1]._id);
 
-    // construct and add on chat record
-    // pick a random message
-    // To Do: make it randomly pick how many chats they have and loop through this below
-    const chat1 = messages[Math.floor(Math.random() * messages.length)];
-    const chat2 = messages[Math.floor(Math.random() * messages.length)];
+    // construct messages for match chat
+    let messageCount = Math.floor(Math.random() * 10) + 1; // random number between 1 and 10
+    let chatObj = {};
+    chatObj.messages = [];
+    for(let i = 1; i <= messageCount; i++) {
+      let message = {};
+      const sender = Math.round(Math.random()); // random between 0 and 1;
+      message.senderId = likers[sender]._id;
+      message.content = messages[Math.floor(Math.random() * messages.length)];
+      chatObj.messages.push(message);
+    }
+    console.log('chat object:');
+    console.log(chatObj);
+    seedMatch[matchCounter].chatId = chatObj;
 
-  
-    // To Do: Trouble here. The chat schema inside the match schema, how to push that data
-    seedMatch.chatId = [];
-    seedMatch.chatId.messages = [];
-    messageObj1 = {senderId: liker1._id, content: chat1};
-    messageObj2 = {senderId: liker2._id, content: chat2};
-
-    seedMatch.chatId.messages.push(messageObj1);
-    seedMatch.chatId.messages.push(messageObj2);
-
-    console.log('seed match object:');
-    console.log(seedMatch);
-
-    // CREATE Match in db
-    db.Match.create(seedMatch, (err, createdMatch) => {
-      if (err) {
-        return console.log(`Error creating matches: ${err}`);
-      }
-      console.log(`Created match: ${createdMatch}`);
-    });
+    console.log(`match count: ${matchCounter}`);
+    matchCounter++;
   })
+  createMatch(seedMatch);
 };
+
+function createMatch(seedMatch) {
+  seedMatch.forEach( match => {
+    db.Chat.create(match.chatId, (err, createdChat) => {
+      if (err) {
+        console.log(`Error creating chats: ${err}`);
+        return;
+      }
+      console.log(`Created chat: ${createdChat._id}`);
+      match.chatId = {}; // empty it out so can create match without it (they are already in Chat)
+
+      db.Match.create(match, (err, createdMatch) => {
+        if (err) {
+          console.log(`Error creating match: ${err}`);
+          return;
+        }
+        createdMatch.chatId = createdChat;  // put the chat object into the match
+        console.log(`Added chat: ${createdMatch.chatId._id}`);
+        createdMatch.save((err, savedMatch) => {
+          if (err) {
+            console.log(`Error saving match: ${err}`);
+            return;
+          }
+          console.log(`Saved match: ${savedMatch._id}`);
+        })
+      })
+    })
+  })
+}
