@@ -5,7 +5,7 @@ const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
 getProfile(id);
 getAllPets();
 
-// get the logged in pet's loginID to populate profile thumbnail
+// get the logged in pet's loginID to populate profile thumbnail and links
 function getProfile(id) {
   // make ajax call
   let api = '/api/pets/' + id;
@@ -18,7 +18,6 @@ function getProfile(id) {
       $('nav .nav-link').attr('href', `/profile/${res.loginId}`);
     } ,
     error: (res) => {
-      return ('Could not find pet ID.');
     }
   });
 }
