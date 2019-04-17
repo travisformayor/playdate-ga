@@ -169,48 +169,95 @@ app.delete('/api/pets/:id', (req, res) => {
 
 // GET index matches
 app.get('/api/matches', (req, res) => {
-//  res.json(matches);
-db.Match.find()
-  .exec((err, allPets) => {
-    if (err) return res.json({error: err});
-    res.json(allPets);
+  db.Match.find()
+    .exec((err, allMatches) => {
+      if (err) return res.json({error: err});
+      res.json(allMatches);
   })
 });
 
-// GET show match
-app.get('/api/matches/:id', (req, res) => {
-  let id = req.params.id;
-  let foundMatch;
-  // loops through matches array and finds if its _id is equal to passed id
-  matches.forEach((match) => {
-    match._id === id ? foundMatch = match : null;
-  });
-  if (foundMatch) {
-    res.json(foundMatch);
-  } else {
-    res.send(`Cannot find match with ID ${id}.`);
-  }
-});
+// // GET show match
+// app.get('/api/matches/:id', (req, res) => {
+//   let id = req.params.id;
+//   let foundMatch;
+//   // loops through matches array and finds if its _id is equal to passed id
+//   matches.forEach((match) => {
+//     match._id === id ? foundMatch = match : null;
+//   });
+//   if (foundMatch) {
+//     res.json(foundMatch);
+//   } else {
+//     res.send(`Cannot find match with ID ${id}.`);
+//   }
+// });
 
-// GET index chats
-app.get('/api/chats', (req, res) => {
-  res.json(chats);
-});
+// POST create new match
+app.post('/api/matches', (req, res) => {
+  // create a chat and add to the new match
+  db.Chat.create({}, (err, createdChat) => {
+    if (err) return res.json({error: err});
 
-// GET show chat - shows one chat history based on id
-app.get('/api/chats/:id', (req, res) => {
-  let id = req.params.id;
-  let foundChat;
-  // loops through chats array and finds if its _id is equal to passed id
-  chats.forEach((chat) => {
-    chat._id === id ? foundChat = chat : null;
-  });
-  if (foundChat) {
-    res.json(foundChat);
-  } else {
-    res.send(`Cannot find chat with ID ${id}.`);
-  }
-});
+    db.Match.create(req.body, (err, createdMatch) => {
+      if (err) return res.json({error: err});
+      createdMatch.chatId = createdChat;
+      createdMatch.save((err, savedMatch) => {
+        if (err) return res.json({error: err});
+        res.json(savedMatch)
+      })
+      //res.json(createdMatch);
+    })
+  })
+})
+
+// // PUT update pet
+// app.put('/api/pets/:id', (req, res) => {
+//   const login = req.params.id;
+//   if (isNum(login)) {
+//     db.Pet.updateOne({loginId: login}, req.body, (err, updatedPet) => {
+//       if (err) return res.json({error: err});
+//       res.json(updatedPet);
+//     })
+//   } else {
+//     res.status(404).send('Please enter a numeric Pet ID');
+//   }
+// })
+//
+// // DELETE delete pet
+// app.delete('/api/pets/:id', (req, res) => {
+//   const login = req.params.id;
+//   if (isNum(login)) {
+//     db.Pet.deleteOne({loginId: login}, (err, deleteMsg) => {
+//       if (err) return res.json({error: err});
+//       res.json(deletedMsg);
+//     })
+//   } else {
+//     res.status(404).send('Please enter a numeric Pet ID');
+//   }
+// })
+
+// // GET index chats
+// app.get('/api/matches', (req, res) => {
+//   db.Match.find()
+//     .exec((err, allMatches) => {
+//       if (err) return res.json({error: err});
+//       res.json(allMatches);
+//   })
+// });
+//
+// // GET show chat - shows one chat history based on id
+// app.get('/api/chats/:id', (req, res) => {
+//   let id = req.params.id;
+//   let foundChat;
+//   // loops through chats array and finds if its _id is equal to passed id
+//   chats.forEach((chat) => {
+//     chat._id === id ? foundChat = chat : null;
+//   });
+//   if (foundChat) {
+//     res.json(foundChat);
+//   } else {
+//     res.send(`Cannot find chat with ID ${id}.`);
+//   }
+// });
 
 // root route with loginid, redirect to /profile
 // adding as last as it's a greedy match
