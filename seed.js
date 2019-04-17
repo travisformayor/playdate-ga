@@ -120,7 +120,7 @@ function seedLikes(dbPets) {
 
 function seedMatches(dbPets) {
    // construct match inside the following array
-   let seedMatch = [];
+   let seedMatch = {};
   
   // mutualLikes is a global var. See above.
   mutualLikes.forEach(match => {
