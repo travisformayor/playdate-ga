@@ -22,6 +22,17 @@ function getProfile(id) {
     // without this, it will be read as a success and will populate the HTML with undefineds
     if (res.name) {
       let pet = res;
+      // properly format pet age into year or year and months
+      let petFormattedAge;
+      if (pet.age > 12) {
+        if (pet.age % 12 === 0) {
+          petFormattedAge = `${pet.age / 12} years`
+        } else {
+          petFormattedAge = `${pet.age / 12 } years ${pet.age % 12} months`;
+        }
+      } else {
+        petFormattedAge = `${pet.age} months`;
+      }
       // generate HTML for page and then append to main
       let petHTML = `
       <h1>Profile</h1>
@@ -43,7 +54,7 @@ function getProfile(id) {
         <ul class="list-group list-group-flush">
           <li class="list-group-item stats">
             <span class="bold prop">Age</span>
-            <span class="stat">${pet.age} years</span>
+            <span class="stat">${petFormattedAge}</span>
             <i class="fas fa-edit edit-stat"></i>
           </li>
         </ul>

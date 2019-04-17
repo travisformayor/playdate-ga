@@ -18,11 +18,9 @@ function getProfile(id) {
       $('nav .profile-icon').css('background-image', `url(/images/thumb/${pet.img})`);
       // add ID-specific links to header and add CSS to make cursor a pointer on links
       $('#profile-link').attr('href', `/profile/${pet.loginId}`);
-      $('#profile-link').css('cursor', 'pointer');
       $('#sniff-link').attr('href', `/sniff/${pet.loginId}`);
-      $('#sniff-link').css('cursor', 'pointer');
       $('#chat-link').attr('href', `/chat/${pet.loginId}`);
-      $('#chat-link').css('cursor', 'pointer');
+      $('a').css('cursor', 'pointer');
     } ,
     error: (res) => {
     }
