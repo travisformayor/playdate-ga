@@ -38,7 +38,8 @@ function getAllPets() {
   });
 
   function handleSuccess(res){
-    let pets = res;
+    // filter the logged in pet's own info out of the response array
+    let pets = res.filter(pet => pet.loginId !== id);
     pets.forEach((pet) => {
       // properly format pet age into year or year and months
       let petFormattedAge;
@@ -51,8 +52,6 @@ function getAllPets() {
       } else {
         petFormattedAge = `${pet.age} months`;
       }
-      // don't push to pets array if the id is equal to current pet
-      // if (pet.loginId !== currId) {
         let petHTML = `
         <div class="carousel-item">
           <div class="profile card text-center">
