@@ -140,7 +140,8 @@ app.post('/api/matches', (req, res) => {
 
 // POST liked someone
 // 1. add like if not already liked
-// 2. check for mutual likes and create a match
+// 2. check for mutual likes
+// 3. create a match, with embedded chat
 app.post('/api/like/:id', (req, res) => {
   const petId = req.params.id;
   const likedId = req.body.liked;
@@ -161,6 +162,16 @@ app.post('/api/like/:id', (req, res) => {
         foundPet.save((err, savedLike) => {
           if (err) return res.json({error: err});
           res.json(savedLike)
+        })
+
+        // 2. Find if it's a mutual match
+        db.Pet.findOne({_id: likedId}).exec((err, foundLike) => {
+          if (err) return res.json({error: err});
+          console.log(foundLike);
+          if (foundLike.likes.includes(petId)) {
+            console.log('its a match!');
+
+          }
         })
       }
     })
