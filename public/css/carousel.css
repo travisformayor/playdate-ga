@@ -26,13 +26,19 @@
 
 .carousel-control-next-icon:after
 {
-  content: '>';
+  content: 'Lick';
   font-size: 45px;
   color: black;
 }
 
 .carousel-control-prev-icon:after {
   content: '<';
+  font-size: 45px;
+  color: black;
+}
+
+#second-next {
+  content: 'Ick';
   font-size: 45px;
   color: black;
 }
