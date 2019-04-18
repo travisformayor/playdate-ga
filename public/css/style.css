@@ -38,6 +38,15 @@ nav .profile-icon {
 nav {
   height: 8vh;
 }
+.navbar-dark .navbar-nav .nav-link {
+  color: #FFF;
+}
+.navbar-collapse {
+  padding-bottom: 6px;
+}
+.active {
+  text-decoration: underline;
+}
 
 /* Profile Page
 -------------------------------------------------- */
