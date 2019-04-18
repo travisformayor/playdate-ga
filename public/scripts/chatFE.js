@@ -2,7 +2,9 @@ $(document).ready(function(){
   // get the profile loginId from the URL
   const url = window.location.href;
   const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
-  let results = [];
+  // add ID-specific links to header
+$('#profile-link').attr('href', `/profile/${id}`);
+$('#sniff-link').attr('href', `/sniff/${id}`);
 
   getMatchesById(id);
 
@@ -19,7 +21,6 @@ $(document).ready(function(){
     function handleSuccess(res) {
       if (res[0].match) {
         console.log(res);
-        results = res;
         // TODO: switch to db img
         //$('nav .profile-icon').css('background-image', `url(/images/thumb/${pet.img})`);
         $('nav .profile-icon').css('background-image', `url(/images/thumb/moxie.jpg)`);
@@ -56,7 +57,7 @@ $(document).ready(function(){
 
   function buildMatch(contact) {
     $('.contacts').append(`
-      <li data-with-id="${contact}">
+      <li data-match-id="${contact}">
         <div class="d-flex bd-highlight">
           <div class="img_cont">
             <img src="/images/thumb/badger.jpg" class="rounded-circle user_img">
@@ -114,10 +115,8 @@ $(document).ready(function(){
   }
 
   $('.contacts').on('click', 'li', e => {
-    const selectedChatter = e.target.parentElement.parentElement.parentElement.dataset.withId;
-    buildChatHead(selectedChatter);
-    console.log(results);
-    console.log(results[3].chatId.messages);
+    buildChatHead(e.currentTarget.dataset.matchId);
+    // add the messages
   })
 
 })
