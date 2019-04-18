@@ -22,6 +22,17 @@ function getProfile(id) {
     // without this, it will be read as a success and will populate the HTML with undefineds
     if (res.name) {
       let pet = res;
+      // properly format pet age into year or year and months
+      let petFormattedAge;
+      if (pet.age > 12) {
+        if (pet.age % 12 === 0) {
+          petFormattedAge = `${pet.age / 12} years`
+        } else {
+          petFormattedAge = `${pet.age / 12 } years ${pet.age % 12} months`;
+        }
+      } else {
+        petFormattedAge = `${pet.age} months`;
+      }
       // generate HTML for page and then append to main
       let petHTML = `
       <h1>Profile</h1>
@@ -43,7 +54,7 @@ function getProfile(id) {
         <ul class="list-group list-group-flush">
           <li class="list-group-item stats">
             <span class="bold prop">Age</span>
-            <span class="stat">${pet.age} years</span>
+            <span class="stat">${petFormattedAge}</span>
             <i class="fas fa-edit edit-stat"></i>
           </li>
         </ul>
@@ -54,6 +65,10 @@ function getProfile(id) {
       $('.card').on('submit', '.editor', saveItem);
       // add thumb icon to nav
       $('nav .profile-icon').css('background-image', `url(/images/thumb/${pet.img})`);
+      // add ID-specific links to header
+      $('#profile-link').attr('href', `/profile/${pet.loginId}`);
+      $('#sniff-link').attr('href', `/sniff/${pet.loginId}`);
+      $('#chat-link').attr('href', `/chat/${pet.loginId}`);
     } else {
       handleError(res);
     }
@@ -116,6 +131,12 @@ function saveItem(e) {
     // console.log(this);
     const nameText = $(this).children('#name').val().trim();
     const typeText = $(this).children('#type').val().trim();
+    // create obj to pass to editProfile
+    let editObj = {
+      name: nameText,
+      type: typeText
+    };
+    editProfile(editObj);
 
     const submitItem = $(this).parent();
     submitItem.html(`
@@ -127,6 +148,11 @@ function saveItem(e) {
   } else if ($(this).hasClass('bio')) {
     // console.log(this);
     const bioText = $(this).children('#biotext').val().trim();
+    // create obj to pass to editProfile
+    let editObj = {
+      bio: bioText,
+    };
+    editProfile(editObj);
 
     const submitItem = $(this).parent();
     submitItem.html(`
@@ -145,4 +171,19 @@ function saveItem(e) {
       <i class="fas fa-edit edit-stat"></i>
       `);
   }
+}
+
+// update profile via PUT: /api/pets/:id
+function editProfile(data) {
+  $.ajax({
+    method: "PUT",
+    url: `/api/pets/${id}`,
+    data: data,
+    success: (res) => {
+      console.log('Success!');
+    },
+    error: (res) => {
+      console.log(res);
+    }
+  })
 }
