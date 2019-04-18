@@ -64,7 +64,7 @@ function getAllPets() {
         let petHTML = `
         <div class="carousel-item" data-petid="${pet._id}">
           <div class="profile card text-center">
-            <img src="/images/${pet.img}" class="card-img-top" alt="..." id="pet-image">
+            <img src="/images/${pet.img}" class="card-img-top" alt="...">
             <div class="card-body">
               <h2 class="card-title">
                 <span class="bold" id="name">${pet.name}</span>
