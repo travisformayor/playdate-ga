@@ -138,6 +138,35 @@ app.post('/api/matches', (req, res) => {
   })
 })
 
+// POST liked someone
+// 1. add like if not already liked
+// 2. check for mutual likes and create a match
+app.post('/api/like/:id', (req, res) => {
+  const petId = req.params.id;
+  const likedId = req.body.liked;
+  
+  if (likedId) {
+    db.Pet.findOne({_id: petId}).exec((err, foundPet) => {
+      if (err) return res.json({error: err});
+      console.log(foundPet);
+
+      // check if the like is already there
+      if (foundPet.likes.includes(likedId)) {
+        console.log('already liked');
+        res.json({error: 'Already Liked'});
+      } else {
+        console.log('not liked yet');
+        // 1.Record the like
+        foundPet.likes.push(likedId);
+        foundPet.save((err, savedLike) => {
+          if (err) return res.json({error: err});
+          res.json(savedLike)
+        })
+      }
+    })
+  }
+})
+
 // root route with loginid, redirect to /profile
 // adding as last as it's a greedy match
 app.get('/:loginid', (req, res) => {
