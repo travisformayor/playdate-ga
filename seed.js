@@ -24,30 +24,38 @@ const seedPets = [
 ];
 
 const liking = [
-  {liker: '1',likes: '2'}, 
-  {liker: '2',likes: '1'}, // mutual
-  {liker: '2',likes: '5'}, 
-  {liker: '5',likes: '2'}, // mutual
-  {liker: '4',likes: '5'},
-  {liker: '1',likes: '5'},
+  {id: 1, likes: [2, 5, 12]},
+  {id: 2, likes: [1, 5, 12]}, // mutual
+  {id: 3, likes: [10, 12]},
+  {id: 4, likes: [8, 12]},
+  {id: 5, likes: [2, 12]}, // mutual
+  {id: 8, likes: [4]}, // mutual
+  {id: 9, likes: [18]},
+  {id: 10, likes: [3]}, // mutual
+  {id: 18, likes: [9]}, // mutual
+  {id: 12, likes: [1, 2, 3, 4, 5]}, // all mutual
 ]
 
 // To Do: switch this out with function that scans likings array
 const mutualLikes = [
   {match_loginID: [1, 2]},
   {match_loginID: [2, 5]},
+  {match_loginID: [10, 3]},
+  {match_loginID: [8, 4]},
+  {match_loginID: [18, 9]},
+  {match_loginID: [12, 1]},
+  {match_loginID: [12, 2]},
+  {match_loginID: [12, 3]},
+  {match_loginID: [12, 4]},
+  {match_loginID: [12, 5]},
 ];
 
 const messages = [
-  'Hello there',
-  'Oh, hi!',
-  'I like parks',
-  'Do you like belly rubs?',
-  'What do you think of squirrels?',
-  'I like sticks',
-  'I love walks',
-  'Squirrels are great',
-  'Laps are the best'
+  'Hello there', 'Oh, hi!', 'I like parks',
+  'Do you like belly rubs?', 'What do you think of squirrels?',
+  'I like sticks', 'I love walks', 'Squirrels are great',
+  'Laps are the best', 'Smell you later!', 'How was your nap',
+  'Humans sure do strange things', 'I like naps', 'Ball!'
 ]
 
 // DELETE all existing data from collections in order of dependency
@@ -101,11 +109,13 @@ function seedLikes(dbPets) {
   // liking is a global var. See above.
   // Update the liker with there likes
   liking.forEach(like => {
-    const liker =  dbPets.find(pet => pet.loginId == like.liker);
-    const likes = dbPets.find(pet => pet.loginId == like.likes);
-    console.log(`${liker.name} likes ${likes.name}.`);
-    liker.likes.push(likes._id);
-    updatedIds.add(liker); 
+    const liker =  dbPets.find(pet => pet.loginId == like.id);
+    like.likes.forEach( liked => {
+      const likes = dbPets.find(pet => pet.loginId == liked);
+      console.log(`${liker.name} likes ${likes.name}.`);
+      liker.likes.push(likes._id);
+      updatedIds.add(liker); 
+    })
   })
   // Save each updated liker once
   updatedIds.forEach(pet => {
