@@ -145,32 +145,47 @@ app.post('/api/matches', (req, res) => {
 app.post('/api/like/:id', (req, res) => {
   const petId = req.params.id;
   const likedId = req.body.liked;
-  
+
   if (likedId) {
     db.Pet.findOne({_id: petId}).exec((err, foundPet) => {
-      if (err) return res.json({error: err});
-      console.log(foundPet);
+      if (err) return res.json({
+        error: err
+      });
 
       // check if the like is already there
       if (foundPet.likes.includes(likedId)) {
-        console.log('already liked');
         res.json({error: 'Already Liked'});
       } else {
-        console.log('not liked yet');
         // 1.Record the like
         foundPet.likes.push(likedId);
         foundPet.save((err, savedLike) => {
           if (err) return res.json({error: err});
-          res.json(savedLike)
         })
 
         // 2. Find if it's a mutual match
         db.Pet.findOne({_id: likedId}).exec((err, foundLike) => {
           if (err) return res.json({error: err});
-          console.log(foundLike);
+          
           if (foundLike.likes.includes(petId)) {
             console.log('its a match!');
 
+            // 3. Create a match with embedded blank chat
+            // 3.a) create a blank chat and add to the new match
+            db.Chat.create({}, (err, createdChat) => {
+              if (err) return res.json({error: err});
+
+              const matchObj = {};
+              matchObj.match = [petId, likedId];
+
+              db.Match.create(matchObj, (err, createdMatch) => {
+                if (err) return res.json({error: err});
+                createdMatch.chatId = createdChat;
+                createdMatch.save((err, savedMatch) => {
+                  if (err) return res.json({error: err});
+                  res.json(savedMatch);
+                })
+              })
+            })
           }
         })
       }
