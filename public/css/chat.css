@@ -6,6 +6,7 @@
   height: 500px;
   border-radius: 15px !important;
   background-color: rgba(0,0,0,0.4) !important;
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.4);
 }
 .contacts_body{
   padding:  0.75rem 0 !important;
@@ -28,16 +29,6 @@
 }
 .container{
   align-content: center;
-}
-.search{
-  border-radius: 15px 0 0 15px !important;
-  background-color: rgba(0,0,0,0.3) !important;
-  border:0 !important;
-  color:white !important;
-}
-.search:focus{
-  box-shadow:none !important;
-  outline:0px !important;
 }
 .type_msg{
   background-color: rgba(0,0,0,0.3) !important;
@@ -77,8 +68,13 @@
   padding: 5px 10px;
   margin-bottom: 15px !important;
 }
+.contacts li:hover {
+  opacity: .6;
+  transition: .5s opacity;
+}
 .active-chat{
   background-color: rgba(0,0,0,0.3);
+  opacity: unset;
 }
 .user_img{
   height: 70px;
