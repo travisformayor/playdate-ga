@@ -2,6 +2,7 @@ $(document).ready(function(){
   // get the profile loginId from the URL
   const url = window.location.href;
   const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
+  let results = [];
 
   getMatchesById(id);
 
@@ -18,6 +19,7 @@ $(document).ready(function(){
     function handleSuccess(res) {
       if (res[0].match) {
         console.log(res);
+        results = res;
         // TODO: switch to db img
         //$('nav .profile-icon').css('background-image', `url(/images/thumb/${pet.img})`);
         $('nav .profile-icon').css('background-image', `url(/images/thumb/moxie.jpg)`);
@@ -36,9 +38,10 @@ $(document).ready(function(){
           if (match !== user_id) buildMatch(match);
         })
 
-        buildChatHead(user_id);
-        buildMatchMessage(res[0].chatId.messages[0]);
-        buildUserMessage(res[0].chatId.messages[1]);
+        buildChatHead('init');
+
+        //buildMatchMessage(res[0].chatId.messages[0]);
+        //buildUserMessage(res[0].chatId.messages[1]);
 
       } else {
         handleError(res);
@@ -67,38 +70,41 @@ $(document).ready(function(){
   }
 
   function buildChatHead(id) {
+    $('.msg_head').empty();
     $('.msg_head').prepend(`
         <div class="d-flex bd-highlight">
           <div class="img_cont">
             <img src="/images/thumb/bailey.jpg" class="rounded-circle user_img">
           </div>
           <div class="user_info">
-            <span>DYNAMIC Chat with ${id.substring(18)}</span>
+            <span>${(id === 'init')? 'Click a match on the left to chat' : 'DYNAMIC Chat with' + id.substring(18) }</span>
           </div>
         </div>`
       )
   }
 
   function buildMatchMessage(msg) {
+    let time = new Date(msg.time);
     $('.msg_card_body').prepend(`
       <div class="d-flex justify-content-start mb-4">
         <div class="img_cont_msg">
           <img src="/images/thumb/bailey.jpg" class="rounded-circle user_img_msg">
         </div>
-        <div class="msg_cotainer">
+        <div class="msg_container">
           ${msg.content}
-          <span class="msg_time">${msg.time}</span>
+          <span class="msg_time">${time.toDateString()}</span>
         </div>
       </div>`
     )
   }
 
   function buildUserMessage(msg) {
+    let time = new Date(msg.time);
     $('.msg_card_body').prepend(`
       <div class="d-flex justify-content-end mb-4">
-        <div class="msg_cotainer_send">
+        <div class="msg_container_send">
           ${msg.content}
-          <span class="msg_time_send">${msg.time}</span>
+          <span class="msg_time_send">${time.toDateString()}</span>
         </div>
         <div class="img_cont_msg">
       <img src="/images/thumb/moxie.jpg" class="rounded-circle user_img_msg">
@@ -107,7 +113,11 @@ $(document).ready(function(){
     )
   }
 
-  $('#action_menu_btn').click(function(){
-    $('.action_menu').toggle();
+  $('.contacts').on('click', 'li', e => {
+    const selectedChatter = e.target.parentElement.parentElement.parentElement.dataset.withId;
+    buildChatHead(selectedChatter);
+    console.log(results);
+    console.log(results[3].chatId.messages);
   })
+
 })
