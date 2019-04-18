@@ -3,6 +3,8 @@ const url = window.location.href;
 const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
 // create var to hold all the logged in pet's likes
 let petLikes;
+// create var to hold the ID of the pet in the active carousel
+let activeId;
 
 getProfile(id);
 getAllPets();
@@ -60,7 +62,7 @@ function getAllPets() {
         petFormattedAge = `${pet.age} months`;
       }
         let petHTML = `
-        <div class="carousel-item">
+        <div class="carousel-item" data-petid="${pet._id}">
           <div class="profile card text-center">
             <img src="/images/${pet.img}" class="card-img-top" alt="..." id="pet-image">
             <div class="card-body">
@@ -68,7 +70,6 @@ function getAllPets() {
                 <span class="bold" id="name">${pet.name}</span>
                 <span> the </span>
                 <span class="bold" id="type">${pet.type}</span>
-                <span class="pet-id" style="display: none;">${pet._id}</span>
               </h2>
               <p class="card-text" id="bio">${pet.bio}</p>
             </div>
@@ -84,8 +85,12 @@ function getAllPets() {
           $('.carousel-inner').append(petHTML);
       // }
     });
-   $('.carousel-item').first().addClass('active');
-
+    $('.carousel-item').first().addClass('active');
+    // set the initial activeId to the active carousel class
+    activeId = $('.carousel-item.active')[0].dataset.petid;
+    // add click listeners for carousel - null because we don't need a this object
+    // $('.carousel-control-next').on('click', likePet.bind(null, activeId));
+    // $('.carousel-control-prev').on('click', dislikePet.bind(null, activeId));
   };
 
   function handleError(res){
@@ -95,16 +100,24 @@ function getAllPets() {
 }
 
  // uses POST
-function likePet(petId, likedPetId) {
-  const api = '/api/likes';
+function likePet(likedPetId) {
+  const api = `/api/likes/${id}`;
   $.ajax({
-    method: 'GET',
+    method: 'POST',
     url: api,
-    success: handleSuccess,
-    error: handleError
+    data: {liked: likedPetId},
+    success: (() => {
+    }),
+    error: () => {
+      console.log(`API probably isn't up yet.`);
+      $(':animated').promise().done(() => {
+        $('.carousel-item.active').prev()[0].remove();
+        activeId = $('.carousel-item.active')[0].dataset.petid;
+      });
+    }
   });
 }
 
-function dislikePet(petId, likedPetId) {
+function dislikePet(dislikedPetId) {
 
 }
