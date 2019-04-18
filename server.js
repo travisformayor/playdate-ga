@@ -101,25 +101,70 @@ app.get('/api/matches', (req, res) => {
   })
 });
 
-// GET matches based on one user's loginId
-// includes all user's chats
+// GET a pets info and details about all their mutual matches
+// Gets matches based on one user's loginId
+// Includes all user's chats
+// Step by step..
+// 1. get all matches
 app.get('/api/matches/:id', (req, res) => {
-  db.Pet.findOne({loginId: req.params.id})
-    .exec((err, foundPet) => {
-      if (err) {
-        return res.json({error: err});
-      } else if (foundPet === null) {
-        res.json([]);
-      } else {
-        db.Match.find({match: foundPet._id})
-          .exec((err, foundMatches) => {
-            if (err) return res.json({error: err});
-            res.json(foundMatches);
+  // Find the pet document
+db.Pet.findOne({loginId:  req.params.id})
+  .catch(err => res.json({error: err}))
+  .then(foundPet => {
+    if (foundPet === null) {
+      res.json({error: 'null'});
+    } else {
+      // res.json(foundPet);
+      // 2. Find all there matches
+      db.Match.find({match: foundPet._id})
+        .catch(err => res.json({error: err}))
+        .then(foundMatches => {
+          if (foundMatches === null) {
+            res.json({error: 'null'});
+          } else {
+            // res.json(foundMatches);
+            // 3a. remove requestor pet
+            let matchIds = [];
+            foundMatches.forEach(match => {
+              const petIdIndex = match.match.indexOf(foundPet._id);
+              match.match.splice(petIdIndex, 1);
+              // 3b. get list of match ids
+              matchIds.push(match.match);
+            })
+            // res.json(foundMatches);
+            // res.json(matchIds);
+            // 4. search all match ids and get there pet info
+            db.Pet.find({_id: matchIds})
+            .catch(err => res.json({error: err}))
+            .then(foundPets => {
+              if (foundPets === null) {
+                res.json({error: 'null'});
+              } else {
+                // res.json(foundPets);
+                // 5. construct response. 
+                // foundMatches + foundPets info
+                foundMatches.forEach(match => {
+                  const pet =  foundPets.find(pet => pet._id == match.match[0]);
+                  match.match[0] = {
+                    id: pet._id,
+                    name: pet.name,
+                    img: pet.img
+                  };
+                })
+                // 6. send match + requester pet json
+                // res.json(foundMatches);
+                foundPet.likes = '';
+                foundPet.likes[0] = {foundMatches};
+                // foundPet.likes = foundMatches;
+                res.json(foundPet);
+              }
+            })
+          }
         })
-      }
-    })
+    }
+  })
 });
-
+ 
 // POST create new match
 // and create new chat object
 app.post('/api/matches', (req, res) => {
@@ -186,6 +231,10 @@ app.post('/api/like/:id', (req, res) => {
                 })
               })
             })
+          } else {
+            // Not mutual, but still a like
+            console.log('Liked!')
+            res.json(foundPet.likes);
           }
         })
       }
