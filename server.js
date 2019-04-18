@@ -141,7 +141,7 @@ db.Pet.findOne({loginId:  req.params.id})
                 res.json({error: 'null'});
               } else {
                 // res.json(foundPets);
-                // 5. construct response. 
+                // 5. construct response.
                 // foundMatches + foundPets info
                 foundMatches.forEach(match => {
                   const pet =  foundPets.find(pet => pet._id == match.match[0]);
@@ -164,7 +164,7 @@ db.Pet.findOne({loginId:  req.params.id})
     }
   })
 });
- 
+
 // POST create new match
 // and create new chat object
 app.post('/api/matches', (req, res) => {
@@ -210,7 +210,7 @@ app.post('/api/like/:id', (req, res) => {
         // 2. Find if it's a mutual match
         db.Pet.findOne({_id: likedId}).exec((err, foundLike) => {
           if (err) return res.json({error: err});
-          
+
           if (foundLike.likes.includes(petId)) {
             console.log('its a match!');
 
@@ -241,6 +241,32 @@ app.post('/api/like/:id', (req, res) => {
     })
   }
 })
+
+// POST route - creates a new message in a chat and adds it to message history
+app.post('/api/message/:chatid', (req, res) => {
+  const chatId = req.params.chatid;
+  const senderId = req.body.senderId;
+  const content = req.body.content;
+
+  // find chat in the database
+  db.Chat.findOne({_id:  chatId})
+  .catch(err => res.json({error: err}))
+  .then(foundChat => {
+    if (foundChat === null) {
+      res.json({error: 'null'});
+    } else {
+      // push the message object to the chatId.messages array
+      foundChat.messages.push({
+        senderId: senderId,
+        content: content
+      });
+      foundChat.save((err, savedChat) => {
+        if (err) res.json({error: err});
+        res.json(savedChat);
+      });
+    };
+  })
+});
 
 // root route with loginid, redirect to /profile
 // adding as last as it's a greedy match
