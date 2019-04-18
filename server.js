@@ -186,6 +186,10 @@ app.post('/api/like/:id', (req, res) => {
                 })
               })
             })
+          } else {
+            // Not mutual, but still a like
+            console.log('Liked!')
+            res.json(foundPet.likes);
           }
         })
       }
