@@ -23,56 +23,22 @@ $(document).ready(function(){
         $('nav .profile-icon').css('background-image', `url(/images/thumb/moxie.jpg)`);
 
         //build matches
-        $('.contacts').append(`
-          <li data-with-id="someId">
-          <div class="d-flex bd-highlight">
-            <div class="img_cont">
-              <img src="/images/thumb/badger.jpg" class="rounded-circle user_img">
-            </div>
-            <div class="user_info">
-              <span>Badger</span>
-            </div>
-          </div>
-        </li>`
-      )
+        let matchArr = [];
+        res.forEach(result => {matchArr = matchArr.concat(result.match)})
+        matchArr.sort();
+        let user_id = '';
 
-      //build chat header
-      $('.msg_head').prepend(`
-          <div class="d-flex bd-highlight">
-            <div class="img_cont">
-              <img src="/images/thumb/bailey.jpg" class="rounded-circle user_img">
-            </div>
-            <div class="user_info">
-              <span>DYNAMIC Chat with Bailey</span>
-            </div>
-          </div>`
-        )
+        for (i = 0; i < matchArr.length - 1; i++) {
+          if (matchArr[i] === matchArr[i + 1]) {user_id = matchArr[i]; break;}
+        }
 
-        //build message from match
-        $('.msg_card_body').append(`
-          <div class="d-flex justify-content-start mb-4">
-            <div class="img_cont_msg">
-              <img src="/images/thumb/bailey.jpg" class="rounded-circle user_img_msg">
-            </div>
-            <div class="msg_cotainer">
-              Hi, how are you moxie?
-              <span class="msg_time">8:40 AM, Today</span>
-            </div>
-          </div>`
-        )
+        matchArr.forEach(match => {
+          if (match !== user_id) buildMatch(match);
+        })
 
-        //build message from user
-        $('.msg_card_body').append(`
-            <div class="d-flex justify-content-end mb-4">
-              <div class="msg_cotainer_send">
-                Hi bailey i am good tnx how about you?
-                <span class="msg_time_send">8:55 AM, Today</span>
-              </div>
-              <div class="img_cont_msg">
-            <img src="/images/thumb/moxie.jpg" class="rounded-circle user_img_msg">
-              </div>
-            </div>`
-          )
+        buildChatHead(user_id);
+        buildMatchMessage(res[0].chatId.messages[0]);
+        buildUserMessage(res[0].chatId.messages[1]);
 
       } else {
         handleError(res);
@@ -85,6 +51,61 @@ $(document).ready(function(){
     }
   }
 
+  function buildMatch(contact) {
+    $('.contacts').append(`
+      <li data-with-id="${contact}">
+        <div class="d-flex bd-highlight">
+          <div class="img_cont">
+            <img src="/images/thumb/badger.jpg" class="rounded-circle user_img">
+          </div>
+          <div class="user_info">
+            <span>${contact.substring(18)}</span>
+          </div>
+        </div>
+      </li>`
+    )
+  }
+
+  function buildChatHead(id) {
+    $('.msg_head').prepend(`
+        <div class="d-flex bd-highlight">
+          <div class="img_cont">
+            <img src="/images/thumb/bailey.jpg" class="rounded-circle user_img">
+          </div>
+          <div class="user_info">
+            <span>DYNAMIC Chat with ${id.substring(18)}</span>
+          </div>
+        </div>`
+      )
+  }
+
+  function buildMatchMessage(msg) {
+    $('.msg_card_body').prepend(`
+      <div class="d-flex justify-content-start mb-4">
+        <div class="img_cont_msg">
+          <img src="/images/thumb/bailey.jpg" class="rounded-circle user_img_msg">
+        </div>
+        <div class="msg_cotainer">
+          ${msg.content}
+          <span class="msg_time">${msg.time}</span>
+        </div>
+      </div>`
+    )
+  }
+
+  function buildUserMessage(msg) {
+    $('.msg_card_body').prepend(`
+      <div class="d-flex justify-content-end mb-4">
+        <div class="msg_cotainer_send">
+          ${msg.content}
+          <span class="msg_time_send">${msg.time}</span>
+        </div>
+        <div class="img_cont_msg">
+      <img src="/images/thumb/moxie.jpg" class="rounded-circle user_img_msg">
+        </div>
+      </div>`
+    )
+  }
 
   $('#action_menu_btn').click(function(){
     $('.action_menu').toggle();
