@@ -4,8 +4,6 @@ const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
 let _id;
 // create var to hold all the logged in pet's likes
 let petLikes;
-// create var to hold the ID of the pet in the active carousel
-let activeId;
 
 getProfile(id);
 getAllPets();
@@ -88,10 +86,8 @@ function getAllPets() {
       // }
     });
     $('.carousel-item').first().addClass('active');
-    // set the initial activeId to the active carousel class
-    activeId = $('.carousel-item.active')[0].dataset.petid;
     // add click listeners for carousel - null because we don't need a this object
-     $('#like').on('click', likePet.bind(null, activeId));
+     $('#like').on('click', likePet);
   };
 
   function handleError(res){
@@ -101,7 +97,8 @@ function getAllPets() {
 }
 
  // uses POST
-function likePet(likedPetId) {
+function likePet() {
+  let likedPetId = $('.carousel-item.active')[0].dataset.petid;
   const api = `/api/like/${_id}`;
   $.ajax({
     method: 'POST',
@@ -109,9 +106,6 @@ function likePet(likedPetId) {
     data: {liked: likedPetId},
     success: (() => {
       console.log('success');
-      setTimeout(() => {
-        activeId = $('.carousel-item.active')[0].dataset.petid;
-      }, 500);
     }),
     error: () => {console.log(`Could not like pet ${likedPetId}.`);}
   });
