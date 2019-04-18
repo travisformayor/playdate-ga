@@ -89,8 +89,8 @@ function getAllPets() {
     // set the initial activeId to the active carousel class
     activeId = $('.carousel-item.active')[0].dataset.petid;
     // add click listeners for carousel - null because we don't need a this object
-    // $('.carousel-control-next').on('click', likePet.bind(null, activeId));
-    // $('.carousel-control-prev').on('click', dislikePet.bind(null, activeId));
+     $('.carousel-control-next').on('click', likePet.bind(null, activeId));
+     $('.carousel-control-prev').on('click', dislikePet.bind(null, activeId));
   };
 
   function handleError(res){
@@ -110,9 +110,10 @@ function likePet(likedPetId) {
     }),
     error: () => {
       console.log(`API probably isn't up yet.`);
-      $(':animated').promise().done(() => {
-        $('.carousel-item.active').prev()[0].remove();
-        activeId = $('.carousel-item.active')[0].dataset.petid;
+      $('.carousel-item').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', 
+        function() {
+          // $('.carousel-item.active').prev()[0].remove();
+          // activeId = $('.carousel-item.active')[0].dataset.petid;
       });
     }
   });
