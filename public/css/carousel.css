@@ -8,3 +8,6 @@
   font-size: 46px;
   margin: 0 50px;
 }
+.carousel-item.active {
+  text-decoration: initial;
+}

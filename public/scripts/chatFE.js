@@ -2,15 +2,16 @@ $(document).ready(function(){
   // get the profile loginId from the URL
   const url = window.location.href;
   const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
+  const chatEvent = {};
   let matchesData = {};
 
   // add ID-specific links to header
 $('#profile-link').attr('href', `/profile/${id}`);
 $('#sniff-link').attr('href', `/sniff/${id}`);
+$('#chat-link').attr('href', `/chat/${id}`);
 
   getMatchesById(id);
 
-  // generate array of all matches/chats for loginId
   function getMatchesById(loginid) {
     const api = `/api/matches/${loginid}`;
     $.ajax({
@@ -101,22 +102,65 @@ $('#sniff-link').attr('href', `/sniff/${id}`);
     )
   }
 
-  $('.contacts').on('click', 'li', e => {
-    const chatWithId = e.currentTarget.dataset.matchId;
-    const chatData = matchesData.likes[0].foundMatches.find((match) => {
-      return match.match[0].id == chatWithId;
-    })
-    buildChatHead(chatData.match[0].name, chatData.match[0].img);
+  function handlePostSuccess(res) {
+  }
+  function handlePostError(err) {
+    console.log(`Error: ${err}`);
+  }
+
+  function buildChat() {
+    console.log(chatEvent)
+    buildChatHead(chatEvent.chatData.match[0].name, chatEvent.chatData.match[0].img);
     // add the messages
     $('.msg_card_body').empty();
-    console.log(chatData.chatId.messages);
-    chatData.chatId.messages.forEach((msg) => {
-      if (msg.senderId === chatWithId) {
-        buildMatchMessage(msg, chatData.match[0].img);
+    chatEvent.chatData.chatId.messages.forEach((msg) => {
+      if (msg.senderId === chatEvent.chatWithId) {
+        buildMatchMessage(msg, chatEvent.chatData.match[0].img);
       } else {
         buildUserMessage(msg, matchesData.img);
       }
     })
+    // add data to button for updating Chat collection
+    $('.send_btn').attr('data-chat-id', chatEvent.chatData.chatId._id);
+    $('textarea').focus();
+  }
+
+// EVENT Handling
+
+  $('.contacts').on('click', 'li', e => {
+    getMatchesById(id);
+    const chatWithId = e.currentTarget.dataset.matchId;
+    const chatData = matchesData.likes[0].foundMatches.find((match) => {
+      return match.match[0].id == chatWithId;
+    })
+    chatEvent.chatWithId = chatWithId;
+    chatEvent.chatData = chatData;
+    buildChat();
+    chatEvent.interval = setInterval(buildChat, 5000);
+  })
+
+
+  $('.send_btn').on('click', (e) => {
+    const content = $('textarea').val();
+    if (content !== '') {
+      let msg = {senderId: `${matchesData._id}`, content: `${content}`, time: Date.now()};
+      buildUserMessage(msg, matchesData.img)
+
+      $.ajax({
+        method: 'POST',
+        url: `/api/message/${e.currentTarget.dataset.chatId}`,
+        data: JSON.stringify(msg),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: handlePostSuccess,
+        error: handlePostError
+      })
+
+      $('textarea').val('').attr('placeholder', '').focus();
+    }
+  })
+  $('textarea').on('keyup', (e) => {
+    if (e.which === 13) $('.send_btn').click();
   })
 
 })

@@ -250,14 +250,14 @@ app.post('/api/message/:chatid', (req, res) => {
   const content = req.body.content;
 
   // find chat in the database
-  db.Chat.findOne({_id:  chatId})
+  db.Match.findOne({"chatId._id": chatId })
   .catch(err => res.json({error: err}))
   .then(foundChat => {
     if (foundChat === null) {
       res.json({error: 'null'});
     } else {
       // push the message object to the chatId.messages array
-      foundChat.messages.push({
+      foundChat.chatId.messages.push({
         senderId: senderId,
         content: content
       });
