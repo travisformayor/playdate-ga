@@ -33,6 +33,9 @@ nav .profile-icon {
   background-size: 110%;
   background-repeat: no-repeat;
 }
+nav .profile-icon:hover {
+  border-color: #bbb;
+}
 .navbar-dark .navbar-nav .nav-link {
   color: #FFF;
 }
