@@ -3,17 +3,17 @@
 
 ## GET /api/pets
 
-INDEX 
+INDEX  
 Returns a list of all pets.
 
 ## GET /api/pets/:id
 
-SHOW
+SHOW  
 Returns pet with the specified ID.
 
 ## POST /api/pets
 
-CREATE
+CREATE  
 Creates a new pet.
 
 **Data constraints**
@@ -32,7 +32,7 @@ Creates a new pet.
 
 ## PUT /api/pets/:id
 
-UPDATE
+UPDATE  
 Edits the parameters of pet with specified ID.
 
 **Data constraints**
@@ -49,22 +49,22 @@ Edits the parameters of pet with specified ID.
 ```
 ## DELETE /api/pets/:id
 
-DESTROY
+DESTROY  
 Deletes the pet with the specified ID.
 
 ## GET /api/matches
 
-INDEX
+INDEX  
 Returns a list of all matches.
 
 ## GET /api/matches/:id
 
-SHOW
+SHOW  
 Returns a list of matches for the specified pet ID.
 
 ## POST /api/matches
 
-CREATE
+CREATE  
 Creates a new matches object, and generates a chat object, from the given two pet IDs.
 
 **Data constraints**
@@ -76,7 +76,7 @@ Creates a new matches object, and generates a chat object, from the given two pe
 
 ## POST /api/like/:id
 
-CREATE
+CREATE  
 Generates a new like for the given pet ID, based on the pet ID in the request body.
 
 **Data constraints**
@@ -89,7 +89,7 @@ Generates a new like for the given pet ID, based on the pet ID in the request bo
 
 ## POST /api/message/:chatid
 
-CREATE
+CREATE  
 Creates a new chat message inside the specified chat ID.
 
 **Data constraints**
