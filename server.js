@@ -104,7 +104,6 @@ app.get('/api/matches', (req, res) => {
 // GET a pets info and details about all their mutual matches
 // Gets matches based on one user's loginId
 // Includes all user's chats
-// Step by step..
 // 1. get all matches
 app.get('/api/matches/:id', (req, res) => {
   // Find the pet document
@@ -114,15 +113,13 @@ db.Pet.findOne({loginId:  req.params.id})
     if (foundPet === null) {
       res.json({error: 'null'});
     } else {
-      // res.json(foundPet);
-      // 2. Find all there matches
+      // 2. Find all their matches
       db.Match.find({match: foundPet._id})
         .catch(err => res.json({error: err}))
         .then(foundMatches => {
           if (foundMatches === null) {
             res.json({error: 'null'});
           } else {
-            // res.json(foundMatches);
             // 3a. remove requestor pet
             let matchIds = [];
             foundMatches.forEach(match => {
@@ -131,16 +128,13 @@ db.Pet.findOne({loginId:  req.params.id})
               // 3b. get list of match ids
               matchIds.push(match.match);
             })
-            // res.json(foundMatches);
-            // res.json(matchIds);
-            // 4. search all match ids and get there pet info
+            // 4. search all match ids and get their pet info
             db.Pet.find({_id: matchIds})
             .catch(err => res.json({error: err}))
             .then(foundPets => {
               if (foundPets === null) {
                 res.json({error: 'null'});
               } else {
-                // res.json(foundPets);
                 // 5. construct response.
                 // foundMatches + foundPets info
                 foundMatches.forEach(match => {
@@ -152,7 +146,6 @@ db.Pet.findOne({loginId:  req.params.id})
                   };
                 })
                 // 6. send match + requester pet json
-                // res.json(foundMatches);
                 foundPet.likes = '';
                 foundPet.likes[0] = {foundMatches};
                 // foundPet.likes = foundMatches;
@@ -197,7 +190,7 @@ app.post('/api/like/:id', (req, res) => {
       .then(foundPet => {
         if (foundPet === null) {
           res.json({error: 'null'});
-        } 
+        }
       // check if the like is already there
       if (foundPet.likes.includes(likedId)) {
         res.json({error: 'Already Liked'});
@@ -213,7 +206,6 @@ app.post('/api/like/:id', (req, res) => {
           if (err) return res.json({error: err});
 
           if (foundLike.likes.includes(petId)) {
-            console.log('its a match!');
 
             // 3. Create a match with embedded blank chat
             // 3.a) create a blank chat and add to the new match
@@ -234,7 +226,6 @@ app.post('/api/like/:id', (req, res) => {
             })
           } else {
             // Not mutual, but still a like
-            console.log('Liked!')
             res.json(foundPet.likes);
           }
         })

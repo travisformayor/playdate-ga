@@ -123,16 +123,13 @@ function likePet() {
     likedPetId: likedPetId,
     data: {liked: likedPetId},
     success: handleLikeSuccess,
-    error: () => {console.log(`Could not like pet ${likedPetId}.`);}
+    error: () => {}
   });
 }
 
 function handleLikeSuccess(res) {
-  console.log(res)
   if (res.match) {
-    console.log('Mutual!');
     $('#mutualModal').modal('show');
   } else if (res.includes(this.likedPetId)) {
-    console.log('Successfully Liked!');
   }
 }
