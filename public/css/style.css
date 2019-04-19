@@ -30,7 +30,6 @@ nav .profile-icon {
   border-radius: 50% / 50%;
   border: 3px solid white;
   /* background-image: url("../images/thumb/oreo.jpg"); */
-  background-attachment: center;
   background-size: 110%;
   background-repeat: no-repeat;
 }
