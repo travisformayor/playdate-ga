@@ -49,6 +49,7 @@ nav .profile-icon {
 .profile.card {
   width: 80vw;
   max-width: 650px;
+  min-height: 700px;
   margin: auto;
   border-radius: 15px;
   box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.4);
