@@ -206,7 +206,6 @@ app.post('/api/like/:id', (req, res) => {
           if (err) return res.json({error: err});
 
           if (foundLike.likes.includes(petId)) {
-            console.log('its a match!');
 
             // 3. Create a match with embedded blank chat
             // 3.a) create a blank chat and add to the new match
@@ -227,7 +226,6 @@ app.post('/api/like/:id', (req, res) => {
             })
           } else {
             // Not mutual, but still a like
-            console.log('Liked!')
             res.json(foundPet.likes);
           }
         })

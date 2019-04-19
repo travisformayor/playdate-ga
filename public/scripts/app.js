@@ -1,4 +1,3 @@
-console.log('sanity check');
 // get the profile loginID from the URL
 const url = window.location.href;
 const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
