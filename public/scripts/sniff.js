@@ -50,6 +50,22 @@ function getAllPets() {
     let pets = res.filter(pet => pet.loginId !== id)
                 .filter(pet => petLikes.indexOf(pet._id) === -1);
 
+    if (pets.length === 0) {
+      let petHTML = `
+        <div>
+          <div class="profile card text-center">
+            <div class="card-body">
+              <h2 class="card-title">
+                <span class="bold">No Matches Left</span>
+              </h2>
+              <p class="card-text">You have already Liked all available pets</p>
+            </div>
+          </div>
+        </div>
+      `;
+      $('.carousel-inner').append(petHTML);
+    }
+
     pets.forEach((pet) => {
       // properly format pet age into year or year and months
       let petFormattedAge;
@@ -104,10 +120,19 @@ function likePet() {
   $.ajax({
     method: 'POST',
     url: api,
+    likedPetId: likedPetId,
     data: {liked: likedPetId},
-    success: (() => {
-      console.log('success');
-    }),
+    success: handleLikeSuccess,
     error: () => {console.log(`Could not like pet ${likedPetId}.`);}
   });
+}
+
+function handleLikeSuccess(res) {
+  console.log(res)
+  if (res.match) {
+    console.log('Mutual!');
+    $('#mutualModal').modal('show');
+  } else if (res.includes(this.likedPetId)) {
+    console.log('Successfully Liked!');
+  }
 }
