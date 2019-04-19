@@ -104,10 +104,19 @@ function likePet() {
   $.ajax({
     method: 'POST',
     url: api,
+    likedPetId: likedPetId,
     data: {liked: likedPetId},
-    success: (() => {
-      console.log('success');
-    }),
+    success: handleLikeSuccess,
     error: () => {console.log(`Could not like pet ${likedPetId}.`);}
   });
+}
+
+function handleLikeSuccess(res) {
+  console.log(res)
+  if (res.match) {
+    console.log('Mutual!');
+    $('#mutualModal').modal('show');
+  } else if (res.includes(this.likedPetId)) {
+    console.log('Successfully Liked!');
+  }
 }
