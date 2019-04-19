@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/public'));
 // ------ ROUTES ------
 // root route; show the sniff page not logged in
 app.get('/', (req, res) => {
-  res.sendFile('/views/sniff.html', {root: __dirname});
+  res.sendFile('/views/index.html', {root: __dirname});
 });
 
 // profile route
