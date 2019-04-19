@@ -54,8 +54,8 @@ nav .profile-icon:hover {
   min-height: 700px;
   margin: auto;
   border-radius: 15px;
-  -webkit-box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.4);
-          box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.4);
+          box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.4);
   overflow: hidden;
 }
 .profile.card .card-img-top {
