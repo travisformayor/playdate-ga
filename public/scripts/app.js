@@ -177,10 +177,11 @@ function editProfile(data) {
     url: `/api/pets/${id}`,
     data: data,
     success: (res) => {
-      console.log('Success!');
+      // insert success logic
+      // HTML update is decoupled - no need for any success handling
     },
-    error: (res) => {
-      console.log(res);
+    error: (err) => {
+      // insert error logic
     }
   })
 }

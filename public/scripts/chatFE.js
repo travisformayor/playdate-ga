@@ -117,5 +117,4 @@ $('#sniff-link').attr('href', `/sniff/${id}`);
       }
     })
   })
-
 })
