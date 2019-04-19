@@ -8,7 +8,7 @@ $.ajax({
 });
 
 function handleError(err) {
-  // insert errorhHandler
+  // insert errorHandler
 }
 function handleSuccess(res) {
   if (res.length > 0) {
