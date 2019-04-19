@@ -3,7 +3,7 @@
   /* border: 1px solid red; */
 }
 body {
-  margin-top: 120px; /* Push content down out from under nav bar */
+  margin-top: 100px; /* Push content down out from under nav bar */
 }
 .nav-link, .navbar-brand {
   font-size: 2em;
