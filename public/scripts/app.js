@@ -161,6 +161,12 @@ function saveItem(e) {
     const statText = $(this).children('input').val().trim();
     const propText = $(this).children('span').text().trim();
 
+    const age = statText.includes('years') ? parseInt(statText.substr(0, statText.indexOf(' '))) * 12 : parseInt(statText.substr(0, statText.indexOf(' ')));
+    let editObj = {
+      age: age,
+    };
+    editProfile(editObj);
+
     const submitItem = $(this).parent();
     submitItem.html(`
       <span class="bold prop">${propText}</span>
