@@ -6,7 +6,6 @@ let _id;
 let petLikes;
 
 getProfile(id);
-getAllPets();
 
 // get the logged in pet's loginID to populate profile thumbnail and links
 function getProfile(id) {
@@ -20,6 +19,8 @@ function getProfile(id) {
       // add the logged in pet's likes to the petLikes var from above
       petLikes = pet.likes;
       _id = pet._id;
+      // Now you can safely call the pet list
+      getAllPets(); // needs defined petLikes
       // add profile photo to header
       $('nav .profile-icon').css('background-image', `url(/images/thumb/${pet.img})`);
       // add ID-specific links to header and add CSS to make cursor a pointer on links
@@ -48,6 +49,22 @@ function getAllPets() {
     // then filter out any pets the logged in pet already likes
     let pets = res.filter(pet => pet.loginId !== id)
                 .filter(pet => petLikes.indexOf(pet._id) === -1);
+
+    if (pets.length === 0) {
+      let petHTML = `
+        <div>
+          <div class="profile card text-center">
+            <div class="card-body">
+              <h2 class="card-title">
+                <span class="bold">No Matches Left</span>
+              </h2>
+              <p class="card-text">You have already Liked all available pets</p>
+            </div>
+          </div>
+        </div>
+      `;
+      $('.carousel-inner').append(petHTML);
+    }
 
     pets.forEach((pet) => {
       // properly format pet age into year or year and months
@@ -103,10 +120,19 @@ function likePet() {
   $.ajax({
     method: 'POST',
     url: api,
+    likedPetId: likedPetId,
     data: {liked: likedPetId},
-    success: (() => {
-      console.log('success');
-    }),
+    success: handleLikeSuccess,
     error: () => {console.log(`Could not like pet ${likedPetId}.`);}
   });
+}
+
+function handleLikeSuccess(res) {
+  console.log(res)
+  if (res.match) {
+    console.log('Mutual!');
+    $('#mutualModal').modal('show');
+  } else if (res.includes(this.likedPetId)) {
+    console.log('Successfully Liked!');
+  }
 }

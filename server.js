@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/public'));
 // ------ ROUTES ------
 // root route; show the sniff page not logged in
 app.get('/', (req, res) => {
-  res.sendFile('/views/sniff.html', {root: __dirname});
+  res.sendFile('/views/index.html', {root: __dirname});
 });
 
 // profile route
@@ -192,11 +192,12 @@ app.post('/api/like/:id', (req, res) => {
   const likedId = req.body.liked;
 
   if (likedId) {
-    db.Pet.findOne({_id: petId}).exec((err, foundPet) => {
-      if (err) return res.json({
-        error: err
-      });
-
+    db.Pet.findOne({_id: petId})
+      .catch(err => res.json({error: err}))
+      .then(foundPet => {
+        if (foundPet === null) {
+          res.json({error: 'null'});
+        } 
       // check if the like is already there
       if (foundPet.likes.includes(likedId)) {
         res.json({error: 'Already Liked'});

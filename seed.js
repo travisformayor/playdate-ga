@@ -37,18 +37,7 @@ const liking = [
 ]
 
 // To Do: switch this out with function that scans likings array
-const mutualLikes = [
-  {match_loginID: [1, 2]},
-  {match_loginID: [2, 5]},
-  {match_loginID: [10, 3]},
-  {match_loginID: [8, 4]},
-  {match_loginID: [18, 9]},
-  {match_loginID: [12, 1]},
-  {match_loginID: [12, 2]},
-  {match_loginID: [12, 3]},
-  {match_loginID: [12, 4]},
-  {match_loginID: [12, 5]},
-];
+const mutualLikes = findMatches(liking);
 
 const messages = [
   'Hello there', 'Oh, hi!', 'I like parks',
@@ -192,4 +181,20 @@ function createMatch(seedMatch) {
       })
     })
   })
+}
+
+function findMatches(arr) {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++){
+    arr[i].likes.forEach(likeId => {
+      // set a second iterator to 1 higher than the original iterator,
+      // since we only need to loop through everything past the current entry
+      for (let c = i + 1; c < arr.length; c++){
+        if (likeId === arr[c].id && arr[c].likes.includes(arr[i].id)) {
+          newArr.push({match_loginID: [arr[i].id, arr[c].id]});
+        }
+      };
+    });
+  };
+  return newArr;
 }
