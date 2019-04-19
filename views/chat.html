@@ -10,13 +10,13 @@
   <script defer src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
   </script>
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
   </script>
   <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
   </script>
-  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script defer src="/scripts/chatFE.js"></script>
 
   <!-- CSS -->
@@ -32,7 +32,7 @@
   <header>
     <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary">
       <div class="col-md-2 col-10">
-        <a class="navbar-brand" href="#">PlayDate</a>
+        <a class="navbar-brand" href="/">PlayDate</a>
       </div>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHid"
         aria-controls="navbarHid" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,13 +77,20 @@
   				<div class="col-md-8 col-xl-6 chat">
   					<div class="card">
   						<div class="card-header msg_head">
-  						 <!-- chat head here -->
+                <div class="d-flex bd-highlight">
+                  <div class="img_cont">
+                    <img class="rounded-circle user_img" id="preChat">
+                  </div>
+                  <div class="user_info">
+                    <span>Click on a match to chat</span>
+                  </div>
+                </div>
   						</div>
   						<div class="card-body msg_card_body d-flex flex-column-reverse">
   						</div>
   						<div class="card-footer">
   							<div class="input-group">
-  								<textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+  								<textarea name="" class="form-control type_msg" placeholder="Helloooo Kitty..."></textarea>
   								<div class="input-group-append">
   									<span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
   								</div>

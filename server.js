@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/public'));
 // ------ ROUTES ------
 // root route; show the sniff page not logged in
 app.get('/', (req, res) => {
-  res.sendFile('/views/sniff.html', {root: __dirname});
+  res.sendFile('/views/index.html', {root: __dirname});
 });
 
 // profile route
@@ -101,23 +101,68 @@ app.get('/api/matches', (req, res) => {
   })
 });
 
-// GET matches based on one user's loginId
-// includes all user's chats
+// GET a pets info and details about all their mutual matches
+// Gets matches based on one user's loginId
+// Includes all user's chats
+// Step by step..
+// 1. get all matches
 app.get('/api/matches/:id', (req, res) => {
-  db.Pet.findOne({loginId: req.params.id})
-    .exec((err, foundPet) => {
-      if (err) {
-        return res.json({error: err});
-      } else if (foundPet === null) {
-        res.json([]);
-      } else {
-        db.Match.find({match: foundPet._id})
-          .exec((err, foundMatches) => {
-            if (err) return res.json({error: err});
-            res.json(foundMatches);
+  // Find the pet document
+db.Pet.findOne({loginId:  req.params.id})
+  .catch(err => res.json({error: err}))
+  .then(foundPet => {
+    if (foundPet === null) {
+      res.json({error: 'null'});
+    } else {
+      // res.json(foundPet);
+      // 2. Find all there matches
+      db.Match.find({match: foundPet._id})
+        .catch(err => res.json({error: err}))
+        .then(foundMatches => {
+          if (foundMatches === null) {
+            res.json({error: 'null'});
+          } else {
+            // res.json(foundMatches);
+            // 3a. remove requestor pet
+            let matchIds = [];
+            foundMatches.forEach(match => {
+              const petIdIndex = match.match.indexOf(foundPet._id);
+              match.match.splice(petIdIndex, 1);
+              // 3b. get list of match ids
+              matchIds.push(match.match);
+            })
+            // res.json(foundMatches);
+            // res.json(matchIds);
+            // 4. search all match ids and get there pet info
+            db.Pet.find({_id: matchIds})
+            .catch(err => res.json({error: err}))
+            .then(foundPets => {
+              if (foundPets === null) {
+                res.json({error: 'null'});
+              } else {
+                // res.json(foundPets);
+                // 5. construct response.
+                // foundMatches + foundPets info
+                foundMatches.forEach(match => {
+                  const pet =  foundPets.find(pet => pet._id == match.match[0]);
+                  match.match[0] = {
+                    id: pet._id,
+                    name: pet.name,
+                    img: pet.img
+                  };
+                })
+                // 6. send match + requester pet json
+                // res.json(foundMatches);
+                foundPet.likes = '';
+                foundPet.likes[0] = {foundMatches};
+                // foundPet.likes = foundMatches;
+                res.json(foundPet);
+              }
+            })
+          }
         })
-      }
-    })
+    }
+  })
 });
 
 // POST create new match
@@ -147,11 +192,12 @@ app.post('/api/like/:id', (req, res) => {
   const likedId = req.body.liked;
 
   if (likedId) {
-    db.Pet.findOne({_id: petId}).exec((err, foundPet) => {
-      if (err) return res.json({
-        error: err
-      });
-
+    db.Pet.findOne({_id: petId})
+      .catch(err => res.json({error: err}))
+      .then(foundPet => {
+        if (foundPet === null) {
+          res.json({error: 'null'});
+        } 
       // check if the like is already there
       if (foundPet.likes.includes(likedId)) {
         res.json({error: 'Already Liked'});
@@ -165,7 +211,7 @@ app.post('/api/like/:id', (req, res) => {
         // 2. Find if it's a mutual match
         db.Pet.findOne({_id: likedId}).exec((err, foundLike) => {
           if (err) return res.json({error: err});
-          
+
           if (foundLike.likes.includes(petId)) {
             console.log('its a match!');
 
@@ -186,12 +232,42 @@ app.post('/api/like/:id', (req, res) => {
                 })
               })
             })
+          } else {
+            // Not mutual, but still a like
+            console.log('Liked!')
+            res.json(foundPet.likes);
           }
         })
       }
     })
   }
 })
+
+// POST route - creates a new message in a chat and adds it to message history
+app.post('/api/message/:chatid', (req, res) => {
+  const chatId = req.params.chatid;
+  const senderId = req.body.senderId;
+  const content = req.body.content;
+
+  // find chat in the database
+  db.Match.findOne({"chatId._id": chatId })
+  .catch(err => res.json({error: err}))
+  .then(foundChat => {
+    if (foundChat === null) {
+      res.json({error: 'null'});
+    } else {
+      // push the message object to the chatId.messages array
+      foundChat.chatId.messages.push({
+        senderId: senderId,
+        content: content
+      });
+      foundChat.save((err, savedChat) => {
+        if (err) res.json({error: err});
+        res.json(savedChat);
+      });
+    };
+  })
+});
 
 // root route with loginid, redirect to /profile
 // adding as last as it's a greedy match
