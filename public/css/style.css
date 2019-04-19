@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
 * {
+  font-family: 'Raleway', sans-serif;
   font-size: 15px;
-  /* border: 1px solid red; */
 }
 body {
   margin-top: 100px; /* Push content down out from under nav bar */
@@ -29,7 +31,6 @@ nav .profile-icon {
   background-color: white;
   border-radius: 50% / 50%;
   border: 3px solid white;
-  /* background-image: url("../images/thumb/oreo.jpg"); */
   background-size: 110%;
   background-repeat: no-repeat;
 }
@@ -44,6 +45,10 @@ nav .profile-icon:hover {
 }
 .active {
   text-decoration: underline;
+}
+
+.bg-primary {
+  background-color: purple!important;
 }
 
 /* Profile Page
@@ -163,7 +168,7 @@ nav .profile-icon:hover {
 -------------------------------------------------- */
 /* Custom default button */
 .btn-secondary {
-  color: #007bff;
+  color: purple;
   background-color: rgba(255, 255, 255, 0.794);
   border: .05rem solid #fff;
 }

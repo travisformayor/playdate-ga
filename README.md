@@ -7,7 +7,7 @@ PlayDate is, as the name implies, a way to facilitate playdates for pets. "Pets"
 
 
 
-[Heroku link](https://cryptic-fjord-66386.herokuapp.com/)
+[Heroku link](https://playdate.waffle.expert/)
 
 [API Documentation](docs/API.md)
 
