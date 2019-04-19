@@ -9,7 +9,7 @@ PlayDate is, as the name implies, a way to facilitate playdates for pets. "Pets"
 
 [Heroku link](https://cryptic-fjord-66386.herokuapp.com/)
 
-[API Documentation](https://github.com/allen-wright/sei1-project1/API.md)
+[API Documentation](docs/API.md)
 
 
 
