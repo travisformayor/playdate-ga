@@ -24,16 +24,24 @@ const seedPets = [
 ];
 
 const liking = [
-  {id: 1, likes: [2, 5, 12]},
-  {id: 2, likes: [1, 5, 12]},
-  {id: 3, likes: [10, 12]},
-  {id: 4, likes: [8, 12]},
-  {id: 5, likes: [2, 12]},
-  {id: 8, likes: [4]},
-  {id: 9, likes: [18]},
-  {id: 10, likes: [3]},
-  {id: 18, likes: [9]},
-  {id: 12, likes: [1, 2, 3, 4, 5]}
+  {id: 1, likes: [2, 5, 12, 15]},
+  {id: 2, likes: [1, 5, 12, 16]},
+  {id: 3, likes: [6, 10, 12, 17]},
+  {id: 4, likes: [8, 3, 11, 18]},
+  {id: 5, likes: [1, 2, 12, 14]},
+  {id: 6, likes: [3, 7, 9, 12]},
+  {id: 7, likes: [6, 8, 12, 14]},
+  {id: 8, likes: [4, 7, 5, 15, 17]},
+  {id: 9, likes: [1, 3, 6, 5, 7, 10, 12]},
+  {id: 10, likes: [3, 4, 5, 10, 18]},
+  {id: 11, likes: [4, 5, 7, 12, 17]},
+  {id: 12, likes: [1, 2, 3, 4, 5, 9, 16]},
+  {id: 13, likes: [1, 3, 5, 14, 15, 18]},
+  {id: 14, likes: [5, 6, 7, 10, 11, 13, 15, 16, 18]},
+  {id: 15, likes: [1, 3, 5, 8, 10, 13, 16]},
+  {id: 16, likes: [2, 4, 8, 12, 9, 14, 15, 18]},
+  {id: 17, likes: [3, 10, 13, 15, 16]},
+  {id: 18, likes: [4, 10, 14, 15, 17]}
 ]
 
 const mutualLikes = findMatches(liking);
@@ -44,7 +52,7 @@ const messages = [
   'I like sticks', 'I love walks', 'Squirrels are great',
   'Laps are the best', 'Smell you later!', 'How was your nap',
   'Humans sure do strange things', 'I like naps', 'Ball!'
-]
+];
 
 // DELETE all existing data from collections in order of dependency
 // DELETE all Matches
