@@ -1,0 +1,82 @@
+/*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #fff;
+}
+
+/* Custom default button */
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+  color: #333;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: #fff;
+  border: .05rem solid #fff;
+}
+
+
+/*
+ * Base structure
+ */
+
+
+body {
+  padding: 30px 0;
+  background-color: #333;
+}
+
+body {
+  display: -ms-flexbox;
+  display: flex;
+  color: #fff;
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+}
+
+.cover-container {
+  max-width: 42em;
+}
+
+
+/*
+ * Cover
+ */
+.cover {
+  padding: 0 1.5rem;
+}
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: 700;
+}
+
+/*
+ * Custom
+ */
+ #petList {
+   margin-top: 40px;
+ }
+ .loginHolder {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+   border-radius: 10px;
+   background-color: #428bca;
+   padding: 10px 20px;
+   max-width: 400px;
+   margin: 10px auto;
+ }
+ .loginHolder .imgHold {
+   width: 55px;
+   height: 55px;
+   border-radius: 50% / 50%;
+   border: 3px solid white;
+   background-color: white;
+   background-size: 120%;
+   background-repeat: no-repeat;
+ }
