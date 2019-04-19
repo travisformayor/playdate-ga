@@ -109,7 +109,6 @@ $('#sniff-link').attr('href', `/sniff/${id}`);
     buildChatHead(chatData.match[0].name, chatData.match[0].img);
     // add the messages
     $('.msg_card_body').empty();
-    console.log(chatData.chatId.messages);
     chatData.chatId.messages.forEach((msg) => {
       if (msg.senderId === chatWithId) {
         buildMatchMessage(msg, chatData.match[0].img);
