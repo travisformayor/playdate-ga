@@ -6,7 +6,6 @@ let _id;
 let petLikes;
 
 getProfile(id);
-getAllPets();
 
 // get the logged in pet's loginID to populate profile thumbnail and links
 function getProfile(id) {
@@ -20,6 +19,8 @@ function getProfile(id) {
       // add the logged in pet's likes to the petLikes var from above
       petLikes = pet.likes;
       _id = pet._id;
+      // Now you can safely call the pet list
+      getAllPets(); // needs defined petLikes
       // add profile photo to header
       $('nav .profile-icon').css('background-image', `url(/images/thumb/${pet.img})`);
       // add ID-specific links to header and add CSS to make cursor a pointer on links
