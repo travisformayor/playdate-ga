@@ -159,6 +159,18 @@ nav .profile-icon:hover {
   max-width: 250px;
   margin: 0 7px;
 }
+/* Sniff Page
+-------------------------------------------------- */
+/* Custom default button */
+.btn-secondary {
+  color: #007bff;
+  background-color: rgba(255, 255, 255, 0.794);
+  border: .05rem solid #fff;
+}
+.btn-md {
+  padding: 0 10px;
+}
+
 
 /* Sticky Footer
 -------------------------------------------------- */
