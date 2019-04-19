@@ -1,5 +1,3 @@
-console.log('test');
-
 // Get all pets info
 let api = '/api/pets/';
 $.ajax({
@@ -10,11 +8,9 @@ $.ajax({
 });
 
 function handleError(err) {
-  console.log(err);
+  // insert errorHandler
 }
 function handleSuccess(res) {
-  console.log(res);
-
   if (res.length > 0) {
     res.forEach(pet => {
       let img = pet.img;
@@ -22,7 +18,7 @@ function handleSuccess(res) {
       let petHtml = `
           <div class="loginHolder">
             <div class="imgHold" id="${pet._id}">
-             
+
             </div>
             <h3>${pet.name}</h3>
             <a href="/profile/${pet.loginId}" class="btn btn-lg btn-secondary">Login</a>

@@ -162,5 +162,4 @@ $('#chat-link').attr('href', `/chat/${id}`);
   $('textarea').on('keyup', (e) => {
     if (e.which === 13) $('.send_btn').click();
   })
-
 })

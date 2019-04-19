@@ -1,4 +1,3 @@
-console.log('sanity check');
 // get the profile loginID from the URL
 const url = window.location.href;
 const id = parseInt(url.substring(url.lastIndexOf('/') + 1));
@@ -81,7 +80,6 @@ function getProfile(id) {
 }
 
 function editItem() {
-  // console.log(this);
   if ($(this).hasClass('edit-title')) {
     const nameText = $(this).siblings('#name').text().trim();
     const typeText = $(this).siblings('#type').text().trim();
@@ -126,9 +124,8 @@ function editItem() {
 
 function saveItem(e) {
   e.preventDefault();
-  // debugger;
+
   if ($(this).hasClass('title')) {
-    // console.log(this);
     const nameText = $(this).children('#name').val().trim();
     const typeText = $(this).children('#type').val().trim();
     // create obj to pass to editProfile
@@ -146,7 +143,7 @@ function saveItem(e) {
       <i class="fas fa-edit edit-title"></i>
       `);
   } else if ($(this).hasClass('bio')) {
-    // console.log(this);
+
     const bioText = $(this).children('#biotext').val().trim();
     // create obj to pass to editProfile
     let editObj = {
@@ -160,7 +157,7 @@ function saveItem(e) {
       <i class="fas fa-edit edit-bio"></i>
       `);
   } else if ($(this).hasClass('stat')) {
-    // console.log(this);
+
     const statText = $(this).children('input').val().trim();
     const propText = $(this).children('span').text().trim();
 
@@ -180,10 +177,11 @@ function editProfile(data) {
     url: `/api/pets/${id}`,
     data: data,
     success: (res) => {
-      console.log('Success!');
+      // insert success logic
+      // HTML update is decoupled - no need for any success handling
     },
-    error: (res) => {
-      console.log(res);
+    error: (err) => {
+      // insert error logic
     }
   })
 }

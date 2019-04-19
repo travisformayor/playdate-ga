@@ -24,19 +24,26 @@ const seedPets = [
 ];
 
 const liking = [
-  {id: 1, likes: [2, 5, 12]},
-  {id: 2, likes: [1, 5, 12]}, // mutual
-  {id: 3, likes: [10, 12]},
-  {id: 4, likes: [8, 12]},
-  {id: 5, likes: [2, 12]}, // mutual
-  {id: 8, likes: [4]}, // mutual
-  {id: 9, likes: [18]},
-  {id: 10, likes: [3]}, // mutual
-  {id: 18, likes: [9]}, // mutual
-  {id: 12, likes: [1, 2, 3, 4, 5]}, // all mutual
+  {id: 1, likes: [2, 5, 12, 15]},
+  {id: 2, likes: [1, 5, 12, 16]},
+  {id: 3, likes: [6, 10, 12, 17]},
+  {id: 4, likes: [8, 3, 11, 18]},
+  {id: 5, likes: [1, 2, 12, 14]},
+  {id: 6, likes: [3, 7, 9, 12]},
+  {id: 7, likes: [6, 8, 12, 14]},
+  {id: 8, likes: [4, 7, 5, 15, 17]},
+  {id: 9, likes: [1, 3, 6, 5, 7, 10, 12]},
+  {id: 10, likes: [3, 4, 5, 10, 18]},
+  {id: 11, likes: [4, 5, 7, 12, 17]},
+  {id: 12, likes: [1, 2, 3, 4, 5, 9, 16]},
+  {id: 13, likes: [1, 3, 5, 14, 15, 18]},
+  {id: 14, likes: [5, 6, 7, 10, 11, 13, 15, 16, 18]},
+  {id: 15, likes: [1, 3, 5, 8, 10, 13, 16]},
+  {id: 16, likes: [2, 4, 8, 12, 9, 14, 15, 18]},
+  {id: 17, likes: [3, 10, 13, 15, 16]},
+  {id: 18, likes: [4, 10, 14, 15, 17]}
 ]
 
-// To Do: switch this out with function that scans likings array
 const mutualLikes = findMatches(liking);
 
 const messages = [
@@ -45,7 +52,7 @@ const messages = [
   'I like sticks', 'I love walks', 'Squirrels are great',
   'Laps are the best', 'Smell you later!', 'How was your nap',
   'Humans sure do strange things', 'I like naps', 'Ball!'
-]
+];
 
 // DELETE all existing data from collections in order of dependency
 // DELETE all Matches
@@ -70,8 +77,7 @@ db.Match.deleteMany({}, (err, deletedMatches) => {
       }
       console.log(`Removed all chats: ${JSON.stringify(deletedPets)}`);
       // Successfully cleared all collections
-      // Can now insert seed data
-      seedCollections(); 
+      seedCollections();
     });
   });
 });
@@ -95,22 +101,22 @@ function seedLikes(dbPets) {
   // So, get unique set of updated likers, and then save them once
   let updatedIds = new Set(); // Set doesn't allow duplicates
 
-  // liking is a global var. See above.
-  // Update the liker with there likes
+  // liking is a global var. See above
+  // Update the liker with their likes
   liking.forEach(like => {
     const liker =  dbPets.find(pet => pet.loginId == like.id);
     like.likes.forEach( liked => {
       const likes = dbPets.find(pet => pet.loginId == liked);
       console.log(`${liker.name} likes ${likes.name}.`);
       liker.likes.push(likes._id);
-      updatedIds.add(liker); 
+      updatedIds.add(liker);
     })
   })
   // Save each updated liker once
   updatedIds.forEach(pet => {
     pet.save((err, savedLike) => {
-      if (err) { return console.log(err); } 
-      else { 
+      if (err) { return console.log(err); }
+      else {
         console.log(`Updated likes for ${savedLike.name}`);
       }
     });
@@ -128,7 +134,7 @@ function createMatchAndChat(dbPets) {
     likers[0] =  dbPets.find(pet => pet.loginId == match.match_loginID[0]);
     likers[1] = dbPets.find(pet => pet.loginId == match.match_loginID[1]);
     console.log(`Mutual: ${likers[0].name} likes ${likers[1].name}.`);
-  
+
     seedMatch[matchCounter] = {match: [], chatId: {}};
     seedMatch[matchCounter].match.push(likers[0]._id);
     seedMatch[matchCounter].match.push(likers[1]._id);
