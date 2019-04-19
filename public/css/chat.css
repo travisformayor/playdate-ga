@@ -36,6 +36,7 @@
   color:white !important;
   height: 60px !important;
   overflow-y: auto;
+  resize: none;
 }
 .type_msg:focus{
   box-shadow:none !important;

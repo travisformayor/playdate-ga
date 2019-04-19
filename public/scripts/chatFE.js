@@ -7,6 +7,7 @@ $(document).ready(function(){
   // add ID-specific links to header
 $('#profile-link').attr('href', `/profile/${id}`);
 $('#sniff-link').attr('href', `/sniff/${id}`);
+$('#chat-link').attr('href', `/chat/${id}`);
 
   getMatchesById(id);
 

@@ -34,6 +34,9 @@ nav .profile-icon {
   background-size: 110%;
   background-repeat: no-repeat;
 }
+nav .profile-icon:hover {
+  border-color: #bbb;
+}
 /* this can be removed if need be - needed more space */
 nav {
   height: 8vh;
