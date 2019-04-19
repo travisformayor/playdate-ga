@@ -1,7 +1,14 @@
 .carousel-controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .carousel-controls h2 a {
@@ -10,4 +17,7 @@
 }
 .carousel-item.active {
   text-decoration: initial;
+}
+.carousel-inner {
+  padding: 5px 0 30px 0;
 }
