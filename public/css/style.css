@@ -34,10 +34,6 @@ nav .profile-icon {
   background-size: 110%;
   background-repeat: no-repeat;
 }
-/* this can be removed if need be - needed more space */
-nav {
-  height: 8vh;
-}
 .navbar-dark .navbar-nav .nav-link {
   color: #FFF;
 }
