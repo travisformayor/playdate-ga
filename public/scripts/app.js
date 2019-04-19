@@ -81,7 +81,6 @@ function getProfile(id) {
 }
 
 function editItem() {
-  // console.log(this);
   if ($(this).hasClass('edit-title')) {
     const nameText = $(this).siblings('#name').text().trim();
     const typeText = $(this).siblings('#type').text().trim();
@@ -126,9 +125,8 @@ function editItem() {
 
 function saveItem(e) {
   e.preventDefault();
-  // debugger;
+
   if ($(this).hasClass('title')) {
-    // console.log(this);
     const nameText = $(this).children('#name').val().trim();
     const typeText = $(this).children('#type').val().trim();
     // create obj to pass to editProfile
@@ -146,7 +144,7 @@ function saveItem(e) {
       <i class="fas fa-edit edit-title"></i>
       `);
   } else if ($(this).hasClass('bio')) {
-    // console.log(this);
+
     const bioText = $(this).children('#biotext').val().trim();
     // create obj to pass to editProfile
     let editObj = {
@@ -160,7 +158,7 @@ function saveItem(e) {
       <i class="fas fa-edit edit-bio"></i>
       `);
   } else if ($(this).hasClass('stat')) {
-    // console.log(this);
+
     const statText = $(this).children('input').val().trim();
     const propText = $(this).children('span').text().trim();
 
