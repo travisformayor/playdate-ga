@@ -4,7 +4,7 @@ PlayDate is a \"Tinder for Pets\" app that follows the time honored \"x company 
 
 ![screenshot](/docs/playdate.png)
 
-[Heroku link](https://playdate.waffle.expert/)
+[Heroku link](https://playdate-345.herokuapp.com/)
 
 [API Documentation](docs/API.md)
 
